@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -90,12 +91,20 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.min.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/jquery/dist/jquery.min.js" ,
+              "node_modules/datatables.net/js/jquery.dataTables.min.js"]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "dce217da-3f6f-4adb-b8c2-0cbbe922c172"
   }
 }

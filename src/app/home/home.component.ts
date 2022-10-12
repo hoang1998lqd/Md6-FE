@@ -387,7 +387,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   logOut(){
     this.customerService.logOutCustomer();
-    window.location.replace("http://localhost:4200/login-register")
+    // window.location.replace("http://localhost:4200/login-register")
+    window.location.reload()
   }
 
 }

@@ -3,11 +3,12 @@ import {HttpClient} from "@angular/common/http";
 
 import {Observable} from "rxjs";
 import {Category} from "../model/Category";
-import {Brand} from "../model/Brand";
-import {ImageURL} from "../model/ImageURL";
 
+import {ImageURL} from "../model/ImageURL";
 import {ProductDTO} from "../model/ProductDTO";
 import {Product} from "../model/Product";
+// @ts-ignore
+import {Brand} from "../model/Brand";
 
 
 @Injectable({
@@ -103,5 +104,9 @@ export class ProductService {
 
   detailProduct(idCustomer?: number, idProduct?: number): Observable<ProductDTO> {
     return this.httpClient.get<ProductDTO>("http://localhost:8081/api/products/detail-product/" + idCustomer + "&" + idProduct)
+  }
+
+  findAllDTOProductByOrderId(idOrder ?: number):Observable<ProductDTO[]>{
+    return  this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/orders/" + idOrder)
   }
 }

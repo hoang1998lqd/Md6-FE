@@ -4,6 +4,6 @@ import {Product} from "./Product";
 export interface OrderDetail {
   id?: number
   quantity?: number
-  orders?: Orders
+  orders: Orders
   product?: Product
 }

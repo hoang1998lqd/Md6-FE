@@ -29,6 +29,7 @@ import { FormCreateProductComponent } from './form-create-product/form-create-pr
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import {OrderDetailComponent} from "./order-detail/order-detail.component";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ShoppingCartComponent,
     AboutUsComponent,
     CheckoutComponent,
+    OrderDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -308,7 +308,12 @@
                       </tr>
                       </tbody>
                     </table>
+
+
+
                     <div class="wc-proceed-to-checkout">
+
+                      <a href="#" >Xem voucher</a>
                       <a href="#" (click)="saveIdShop(shop.id)">Tiến hành thanh toán</a>
                     </div>
                   </div>
@@ -329,8 +334,16 @@
               <div class="row" style="margin-top: 20px">
                 <!-- Cart Button Start -->
                 <div class="col-md-8 col-sm-12">
+
                   <div class="buttons-cart">
                     <a href="#">Tiếp tục mua sắm</a>
+
+                  </div>
+                  <div class="coupon">
+
+                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Nhập mã" type="text">
+                    <input class="button" name="apply_coupon" value="Áp mã giảm giá" type="submit"  (click)="getCheckVoucher()" >
+
                   </div>
                 </div>
                 <!-- Cart Button Start -->
@@ -347,7 +360,7 @@
                       </tr>
                       <tr class="cart-subtotal">
                         <th>Giảm giá</th>
-                        <td><span class="amount">{{0}}%</span></td>
+                        <td><span class="amount">{{discountVoucher}}%</span></td>
                       </tr><tr class="cart-subtotal">
                         <th>Voucher</th>
                         <td><span class="amount">{{voucherItem}}%</span></td>

@@ -10,6 +10,8 @@ import {Customer} from "../model/Customer";
 import {DTOItem} from "../model/DTOItem";
 import {CategoryBrandService} from "../service/category-brand.service";
 import {CategoryBrand} from "../model/CategoryBrand";
+import {VoucherService} from "../service/voucher.service";
+import {Voucher} from "../model/Voucher";
 
 export interface Task {
   name: string;
@@ -42,8 +44,11 @@ export class ShoppingCartComponent implements OnInit {
   items: Item [] = []
   discountItem: number = 0;
   voucherItem: number = 0;
+  discountVoucher: number=0;
   // Những tài khoản có quyền bán hàng
   listCustomerHaveShop: Customer [] = []
+  vouchers: Voucher [] = []
+
   listProduct: ProductDTO [] = []
   subtotal: number = 0;
   total: number = 0;
@@ -59,6 +64,7 @@ export class ShoppingCartComponent implements OnInit {
               private cartService: CartService,
               private customerService: CustomerService,
               private categoryBrandService: CategoryBrandService,
+              private voucherService: VoucherService,
   ) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
@@ -392,6 +398,18 @@ export class ShoppingCartComponent implements OnInit {
         // @ts-ignore
         totalMoney = this.items[i].quantity * this.items[i].product.price
         return totalMoney
+      }
+    }
+  }
+  getCheckVoucher() {
+// @ts-ignore
+    let Mgg = document.getElementById("coupon_code").value
+    let check = null;
+    for (let i = 0; i < this.vouchers.length; i++) {
+      if (this.vouchers[i].name == Mgg) {
+        check = this.vouchers;
+        this.discountVoucher == this.vouchers[i].discount
+
       }
     }
   }

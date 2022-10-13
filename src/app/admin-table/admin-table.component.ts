@@ -12,6 +12,9 @@ import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 
 import {Category} from "../model/Category";
+import {Voucher} from "../model/Voucher";
+import {VoucherService} from "../service/voucher.service";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
 
 
 @Component({
@@ -37,6 +40,9 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
   idVoucherUpdate!: number
   vouchers: Voucher [] = []
   listVoucher!: MatTableDataSource<Voucher>
+  idt?: number
+  customer?: number;
+
 
   categories: Category [] = []
   productForm!: FormGroup;
@@ -119,7 +125,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     this.displayProducts()
     this.displayBrands()
     this.displayCategories()
-    displayVoucher()
+    this.displayVoucher()
     this.voucherForm = this.formGroup.group({
       id: [''],
       name: [''],
@@ -202,7 +208,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     })
   }
 
-  deleteProduct(id: number) {
+  deleteProduct(id: any) {
     // this.productService.deleteProduct(id)
     Swal.fire({
       title: 'Bạn có chắc chắn muốn xóa?',
@@ -242,11 +248,11 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
   }
   displayVoucher() {
 // @ts-ignore
-    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    let id = parseInt(localStorage.getItem("idCustomer"))
 
     // @ts-ignore
     document.getElementById('displayVocher').style.display = "block"
-    this.voucherService.findAllByStore_Id(5).subscribe(value => {
+    this.voucherService.findAllByStore_Id(id).subscribe(value => {
       this.vouchers = value
     })
 
@@ -263,13 +269,14 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     document.getElementById("myModal").style.display = "block"
   }
   createVoucher() {
+    // @ts-ignore
+    let id = parseInt(localStorage.getItem("idCustomer"))
     let voucher = {
       id: this.voucherForm.value.id,
       name: this.voucherForm.value.name,
       discount: this.voucherForm.value.discount,
       quantity: this.voucherForm.value.quantity,
-      customer: {
-        id: id
+      customer: { id : 5
       }
     }
     this.voucherService.createVoucher(voucher).subscribe(value => {
@@ -290,15 +297,16 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     // @ts-ignore
     document.getElementById("rest").click()
   }
-  updateVoucher(id?: number) {
+  updateVoucher(idt?: number) {
     // @ts-ignore
+    let id = parseInt(localStorage.getItem("idCustomer"))
     let voucher = {
-      id: id,
+      id: idt,
       name: this.voucherForm.value.name,
       discount: this.voucherForm.value.discount,
       quantity: this.voucherForm.value.quantity,
       customer: {
-        id: id
+        id: 5
       }
     }
     Swal.fire({
@@ -333,7 +341,8 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     // @ts-ignore
     document.getElementById("createVoucher").style.display = "none"
   }
-  deleteVoucher(id : any
+
+  deleteVoucher(id: any
   ) {
     Swal.fire({
       title: 'Bạn có chắc chắn muốn xóa?',
@@ -375,5 +384,22 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
       timer: 1500
     })
   }
+  openModalVoucher() {
+    // @ts-ignore
+    document.getElementById("createVoucher").style.display = "block"
+
+  }
+  displayFormCreate() {
+    let modal = document.getElementById("myModal");
+    // @ts-ignore
+    modal.style.display = "block";
+    // @ts-ignore
+    this.voucherForm()
+  }
+  // closeFromCreate() {
+  //   // @ts-ignore
+  //   document.getElementById("createVoucher").style.display = "none"
+  // }
+
 
 }

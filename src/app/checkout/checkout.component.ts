@@ -114,6 +114,7 @@ export class CheckoutComponent implements OnInit {
     this.findItemByShopId()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
+    this.displayItem()
   }
 
   // Hiển thị Brand và Category
@@ -233,6 +234,7 @@ export class CheckoutComponent implements OnInit {
       }
     }
   }
+
   deleteItem(idItem?: number) {
     Swal.fire({
       title: 'Xóa sản phẩm',
@@ -341,7 +343,7 @@ export class CheckoutComponent implements OnInit {
     this.idCurrentCustomer = parseInt(localStorage.getItem("idCustomer"))
     // @ts-ignore
     let idCustomerCurrent = parseInt(localStorage.getItem("idCustomer"))
-    return this.cartService.findAllDTOItem(idCustomerCurrent).subscribe(value => {
+    return this.cartService.findAllDTOItem(this.idCurrentCustomer).subscribe(value => {
       console.log(value)
       this.DTOItems = value
     })

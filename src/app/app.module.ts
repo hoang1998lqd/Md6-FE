@@ -25,19 +25,24 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {AdminTableComponent} from "./admin-table/admin-table.component";
 import {AdminComponent} from "./admin/admin.component";
 import {FormCreateProductComponent} from "./form-create-product/form-create-product.component";
-import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+
 import {OrderShopComponent} from "./order-shop/order-shop.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import {OrderModule} from "ngx-order-pipe";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+=======
+import {ShopComponent} from "./shop/shop.component";
+import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ShopComponent,
     AdminTableComponent,
     AdminComponent,
     FormCreateProductComponent,

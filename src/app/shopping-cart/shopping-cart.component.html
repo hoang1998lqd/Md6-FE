@@ -95,7 +95,7 @@
                   <ul class="ht-dropdown cart-box-width">
                     <li >
                       <!-- Cart Box Start -->
-                      <div class="single-cart-box"*ngFor="let item of items" >
+                      <div class="single-cart-box" *ngFor="let item of items">
                         <div class="cart-img">
                           <a href="#"><img [src]="findImageURLFirst(item.product!.id)" alt="cart-image"></a>
                           <span class="pro-quantity">{{item!.quantity}}</span>
@@ -156,17 +156,7 @@
                   </ul>
                   <!-- Home Version Dropdown End -->
                 </li>
-                <li><a href="#">pages<i class="fa fa-angle-down"></i></a>
-                  <!-- Home Version Dropdown Start -->
-                  <ul class="ht-dropdown dropdown-style-two">
-                    <li><a href="contact.html">contact us</a></li>
-                    <li><a href="register.html">register</a></li>
-                    <li><a href="login.html">sign in</a></li>
-                    <li><a href="forgot-password.html">forgot password</a></li>
-                    <li><a href="404.html">404</a></li>
-                  </ul>
-                  <!-- Home Version Dropdown End -->
-                </li>
+                <li><a href="#">Quản lý cửa hàng<i class="fa fa-angle-down"></i></a>
                 <li><a href="about.html">Giới thiệu</a></li>
                 <li><a href="contact.html">Kết nối</a></li>
               </ul>
@@ -277,7 +267,7 @@
                 <!-- Cart Button Start -->
                 <div class="col-md-8 col-sm-12">
                   <div class="buttons-cart">
-                    <input type="button" value="Cập nhật giỏ hàng" (click)="updateQuantityItem()" />
+                    <input type="button" style="text-align: center" value="Cập nhật giỏ hàng" (click)="updateQuantityItem()" />
                     <a href="#">Tiếp tục mua sắm</a>
                   </div>
                 </div>
@@ -330,7 +320,6 @@
                 <!-- Cart Button Start -->
                 <div class="col-md-8 col-sm-12">
                   <div class="buttons-cart">
-                    <input type="button" value="Cập nhật giỏ hàng" (click)="updateQuantityItem()" />
                     <a href="#">Tiếp tục mua sắm</a>
                   </div>
                 </div>

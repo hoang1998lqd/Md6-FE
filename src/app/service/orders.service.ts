@@ -27,6 +27,7 @@ export class OrdersService {
     return this.httpclient.get<Orders[]>("http://localhost:8081/api/orders/order-customer/"+idCustomer)
   }
 
+
   //Tìm kiếm chi tiết đơn hàng thông qua ID của Order
   findAllOrderDetailByOrderId(idOrder ?: number):Observable<OrderDetail[]>{
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail/" + idOrder)
@@ -38,8 +39,8 @@ export class OrdersService {
     return this.httpclient.put<Orders>("http://localhost:8081/api/orders/update-quantity" , orders)
   }
   //Tìm kiếm thông tin chi tiết đơn hàng của NGƯỜI BÁN HÀNG đó
-  findAllOrderDetailByShopId(idShop ?: number):Observable<OrderDetail[]>{
-    return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/shop-id&"+ idShop)
+  findAllOrderDetailByShopId(idShop ?: number):Observable<OrderDetail[]> {
+    return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/shop-id&" + idShop)
 
   }
 
@@ -51,5 +52,6 @@ export class OrdersService {
   findAllOrderDetailByOrder(idOrder: number): Observable<OrderDetail[]> {
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail-order/" + idOrder)
   }
+
 
 }

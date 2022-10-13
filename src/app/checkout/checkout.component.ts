@@ -44,7 +44,7 @@ export class CheckoutComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
-  DTOItemCheckOut: DTOItem [] = []
+
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
@@ -234,6 +234,7 @@ export class CheckoutComponent implements OnInit {
       }
     }
   }
+
   deleteItem(idItem?: number) {
     Swal.fire({
       title: 'Xóa sản phẩm',
@@ -342,7 +343,7 @@ export class CheckoutComponent implements OnInit {
     this.idCurrentCustomer = parseInt(localStorage.getItem("idCustomer"))
     // @ts-ignore
     let idCustomerCurrent = parseInt(localStorage.getItem("idCustomer"))
-    return this.cartService.findAllDTOItem(idCustomerCurrent).subscribe(value => {
+    return this.cartService.findAllDTOItem(this.idCurrentCustomer).subscribe(value => {
       console.log(value)
       this.DTOItems = value
     })

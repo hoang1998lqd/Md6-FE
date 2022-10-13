@@ -22,28 +22,49 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxPaginationModule} from "ngx-pagination";
+
 import { OrderCustomerComponent } from './order-customer/order-customer.component';
 import { AdminTableComponent } from './admin-table/admin-table.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormCreateProductComponent } from './form-create-product/form-create-product.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+
+
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
+
+
+import {OrderShopComponent} from "./order-shop/order-shop.component";
+import {MatExpansionModule} from "@angular/material/expansion";
+// @ts-ignore
+import {OrderModule} from "ngx-order-pipe";
+// @ts-ignore
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+
+import {ShopComponent} from "./shop/shop.component";
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+
     OrderCustomerComponent,
+
+    ShopComponent,
+
     AdminTableComponent,
     AdminComponent,
     FormCreateProductComponent,
     ShoppingCartComponent,
     AboutUsComponent,
     CheckoutComponent,
+
+    OrderShopComponent,
     OrderDetailComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -67,8 +88,15 @@ import {OrderDetailComponent} from "./order-detail/order-detail.component";
     MatSortModule,
     MatCheckboxModule,
     NgxPaginationModule,
+    MatExpansionModule,
+    OrderModule,
+    Ng2SearchPipeModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
+
+// @ts-ignore
 export class AppModule { }

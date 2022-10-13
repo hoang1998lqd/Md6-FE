@@ -79,8 +79,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('empTbSort') empTbSort = new MatSort();
-  @ViewChild('empTbSortWithObject') empTbSortWithObject = new MatSort();
+
 
   ngOnInit(): void {
     const script1 = document.createElement('link');

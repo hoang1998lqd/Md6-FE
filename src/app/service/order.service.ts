@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Orders} from "../model/Orders";
+import {OrderDetail} from "../model/OrderDetail";
 
 
 
@@ -22,13 +23,9 @@ export class OrderService {
     return this.httpClient.get<Orders[]>("http://localhost:8081/api/orders")
   }
 
-  findOneOrder(): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8081/api/orders/order-detail")
-  }
-
   // tìm kiếm tất cả order-detail theo 1 order
-  findAllOrderDetailByOrder(idOrder: number): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8081/api/orders/order-detail-order/" + idOrder)
+  findAllOrderDetailByOrder(idOrder: number): Observable<OrderDetail[]> {
+    return this.httpClient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail-order/" + idOrder)
   }
 
   findAllOrderByCustomer(idCustomer: number): Observable<any> {

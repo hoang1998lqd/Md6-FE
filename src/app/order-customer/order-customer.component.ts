@@ -8,6 +8,7 @@ import {CustomerService} from "../service/customer.service";
 // @ts-ignore
 import {OrderDetail} from "../model/OrderDetail";
 import {ProductDTO} from "../model/ProductDTO";
+import {OrderService} from "../service/order.service";
 
 @Component({
   selector: 'app-order-customer',
@@ -34,8 +35,11 @@ export class OrderCustomerComponent implements OnInit {
   listProduct: ProductDTO[] = []
 
 
-  constructor(private orderService: OrdersService,
-              private customerService: CustomerService) {
+
+
+  constructor(private ordersService: OrdersService,
+              private customerService: CustomerService,
+              private orderService: OrderService) {
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -55,7 +59,7 @@ export class OrderCustomerComponent implements OnInit {
   findAllOrderByCustomerId() {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
+    return this.ordersService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
       this.listOrderCustomer = new MatTableDataSource(value)
       // @ts-ignore
       this.listOrderCustomer.paginator = this.paginator
@@ -65,24 +69,26 @@ export class OrderCustomerComponent implements OnInit {
   findAllOrderDetailByCustomerId(){
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderDetailByCustomerId(idCustomer).subscribe(value => {
+    return this.ordersService.findAllOrderDetailByCustomerId(idCustomer).subscribe(value => {
       this.listOrderDetail = value
       console.log(value)
     })
   }
 
-  // findAllOrderDetail
 
-  findAllOrderDetail(idOrder ?: number): any {
+  findAllOrderDetail(idOrder ?: number): OrderDetail[] {
     let orderDetails: OrderDetail [] = []
     for (let i = 0; i < this.listOrderDetail.length; i++) {
       if (idOrder == this.listOrderDetail[i].id) {
-        // @ts-ignore
-        orderDetails.push(this.listOrderDetail[idOrder])
+        orderDetails.push(this.listOrderDetail[i])
       }
     }
+    console.log(orderDetails)
     return orderDetails;
   }
+
+
+
 }
 
 

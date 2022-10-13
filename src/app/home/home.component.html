@@ -13,19 +13,19 @@
   <!-- Newsletter Popup Start -->
   <div class="popup_wrapper">
     <div class="test">
-      <span class="popup_off">Close</span>
+      <span class="popup_off">Thoát</span>
       <div class="subscribe_area text-center mt-60">
-        <h2>Newsletter</h2>
-        <p>Subscribe to the Truemart mailing list to receive updates on new arrivals, special offers and other discount information.</p>
+        <h2>Bản tin</h2>
+        <p>Theo dõi danh sách gửi thư Truemart để nhận thông tin cập nhật về hàng mới, ưu đãi đặc biệt và thông tin giảm giá khác.</p>
         <div class="subscribe-form-group">
           <form action="#">
             <input autocomplete="off" type="text" name="message" id="message" placeholder="Enter your email address">
-            <button type="submit">subscribe</button>
+            <button type="submit">Theo dõi</button>
           </form>
         </div>
         <div class="subscribe-bottom mt-15">
           <input type="checkbox" id="newsletter-permission">
-          <label for="newsletter-permission">Don't show this popup again</label>
+          <label for="newsletter-permission">Không hiển thị lại cửa sổ bật lên này</label>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
               <!-- Dropdown Start -->
               <ul class="ht-dropdown">
                 <li *ngIf="idCurrentCustomer != 0">
-                  <a href="login.html" >Đăng Xuất</a>
+                  <a style="cursor: pointer" (click)="logOut()" >Đăng Xuất</a>
                   <a href="login.html" >Thông tin cá nhân</a>
                   <a href="login.html" >Lịch sử mua hàng</a></li>
                 <li  *ngIf="idCurrentCustomer == 0"><a href="register.html">Đăng Nhập</a></li>
@@ -78,38 +78,8 @@
           <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
             <div class="categorie-search-box">
               <form action="#">
-                <div class="form-group">
-                  <select class="bootstrap-select" name="poscats">
-                    <option value="0">All categories</option>
-                    <option value="2">Arrivals</option>
-                    <option value="3">Cameras</option>
-                    <option value="4">Cords and Cables</option>
-                    <option value="5">gps accessories</option>
-                    <option value="6">Microphones</option>
-                    <option value="7">Wireless Transmitters</option>
-                    <option value="8">GamePad</option>
-                    <option value="9">cube lifestyle hd</option>
-                    <option value="10">Bags</option>
-                    <option value="11">Bottoms</option>
-                    <option value="12">Shirts</option>
-                    <option value="13">Tailored</option>
-                    <option value="14">Home &amp; Kitchen</option>
-                    <option value="15">Large Appliances</option>
-                    <option value="16">Armchairs</option>
-                    <option value="17">Bunk Bed</option>
-                    <option value="18">Mattress</option>
-                    <option value="19">Sideboard</option>
-                    <option value="20">Small Appliances</option>
-                    <option value="21">Bootees Bags</option>
-                    <option value="22">Jackets</option>
-                    <option value="23">Shelf</option>
-                    <option value="24">Shoes</option>
-                    <option value="25">Phones &amp; Tablets</option>
-                    <option value="26">Tablet</option>
-                    <option value="27">phones</option>
-                  </select>
-                </div>
-                <input type="text" name="search" placeholder="I’m shopping for...">
+
+                <input type="text" name="search" placeholder="Bạn đang mua ...">
                 <button><i class="lnr lnr-magnifier"></i></button>
               </form>
             </div>
@@ -148,12 +118,10 @@
                     </li>
                   </ul>
                 </li>
-                <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Wish</span><span>list (0)</span></span></a>
+                <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Danh sách</span><span>Yêu thích (0)</span></span></a>
                 </li>
-                <li><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Sign in</strong> Or</span><span> Join My Site</span></span></a>
-
-
-
+                <li *ngIf="idCurrentCustomer == 0"><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Đăng nhập</strong> Or</span><span>Thành viên mới</span></span></a>
+                <li *ngIf="idCurrentCustomer != 0"><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Xin chào</strong> </span><span>{{idCurrentCustomer}} !!</span></span></a>
                 </li>
               </ul>
             </div>
@@ -201,52 +169,6 @@
                 <li><a href="contact.html">contact us</a></li>
               </ul>
             </nav>
-            <div class="mobile-menu d-block d-lg-none">
-              <nav>
-                <ul>
-                  <li><a href="index.html">home</a>
-                    <!-- Home Version Dropdown Start -->
-                    <ul>
-                      <li><a href="index.html">Home Version 1</a></li>
-                      <li><a href="index-2.html">Home Version 2</a></li>
-                      <li><a href="index-3.html">Home Version 3</a></li>
-                      <li><a href="index-4.html">Home Version 4</a></li>
-                    </ul>
-                    <!-- Home Version Dropdown End -->
-                  </li>
-                  <li><a href="shop.html">shop</a>
-                    <!-- Mobile Menu Dropdown Start -->
-                    <ul>
-                      <li><a href="product.html">product details</a></li>
-                      <li><a href="compare.html">compare</a></li>
-                      <li><a href="cart.html">cart</a></li>
-                      <li><a href="checkout.html">checkout</a></li>
-                      <li><a href="wishlist.html">wishlist</a></li>
-                    </ul>
-                    <!-- Mobile Menu Dropdown End -->
-                  </li>
-                  <li><a href="blog.html">Blog</a>
-                    <!-- Mobile Menu Dropdown Start -->
-                    <ul>
-                      <li><a href="single-blog.html">blog details</a></li>
-                    </ul>
-                    <!-- Mobile Menu Dropdown End -->
-                  </li>
-                  <li><a href="#">pages</a>
-                    <!-- Mobile Menu Dropdown Start -->
-                    <ul>
-                      <li><a href="register.html">register</a></li>
-                      <li><a href="login.html">sign in</a></li>
-                      <li><a href="forgot-password.html">forgot password</a></li>
-                      <li><a href="404.html">404</a></li>
-                    </ul>
-                    <!-- Mobile Menu Dropdown End -->
-                  </li>
-                  <li><a href="about.html">about us</a></li>
-                  <li><a href="contact.html">contact us</a></li>
-                </ul>
-              </nav>
-            </div>
           </div>
         </div>
         <!-- Row End -->
@@ -254,44 +176,6 @@
       <!-- Container End -->
     </div>
     <!-- Header Bottom End Here -->
-    <!-- Mobile Vertical Menu Start Here -->
-    <div class="container d-block d-lg-none">
-      <div class="vertical-menu mt-30">
-        <span class="categorie-title mobile-categorei-menu">Danh mục sản phẩm</span>
-        <nav>
-          <div id="cate-mobile-toggle" class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden ">
-            <ul *ngFor="let categoryBrand of categoryBrands">
-              <li class="has-sub"><a href="#">Automotive & Motorcycle </a>
-                <ul class="category-sub">
-                  <li class="has-sub"><a href="shop.html">Office chair</a>
-                    <ul class="category-sub">
-                      <li><a href="shop.html">Bibendum Cursus</a></li>
-                      <li><a href="shop.html">Dignissim Turpis</a></li>
-                      <li><a href="shop.html">Dining room</a></li>
-                      <li><a href="shop.html">Dining room</a></li>
-                    </ul>
-                  </li>
-                  <li class="has-sub"><a href="shop.html">Purus Lacus</a>
-                    <ul class="category-sub">
-                      <li><a href="shop.html">Magna Pellentesq</a></li>
-                      <li><a href="shop.html">Molestie Tortor</a></li>
-                      <li><a href="shop.html">Vehicula Element</a></li>
-                      <li><a href="shop.html">Sagittis Blandit</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="shop.html">gps accessories</a></li>
-                  <li><a href="shop.html">Microphones</a></li>
-                  <li><a href="shop.html">Wireless Transmitters</a></li>
-                </ul>
-                <!-- category submenu end-->
-              </li>
-            </ul>
-          </div>
-          <!-- category-menu-end -->
-        </nav>
-      </div>
-    </div>
-    <!-- Mobile Vertical Menu Start End -->
   </header>
   <!-- Main Header Area End Here -->
   <!-- Categorie Menu & Slider Area Start Here -->
@@ -1016,8 +900,8 @@
             <i class="lnr lnr-gift"></i>
           </div>
           <div class="support-desc">
-            <h6>Great Value</h6>
-            <span>Nunc id ante quis tellus faucibus dictum in eget.</span>
+            <h6>Giá trị</h6>
+            <span>Sản phẩm được gửi tới bạn là sản phẩm <strong>vô cùng giá trị.</strong></span>
           </div>
         </div>
         <div class="single-support">
@@ -1025,8 +909,8 @@
             <i class="lnr lnr-rocket" ></i>
           </div>
           <div class="support-desc">
-            <h6>Worlwide Delivery</h6>
-            <span>Quisque posuere enim augue, in rhoncus diam dictum non</span>
+            <h6>Vận chuyển</h6>
+            <span>Đơn hàng luôn được vận chuyển một cách <strong> an toàn.</strong></span>
           </div>
         </div>
         <div class="single-support">
@@ -1034,8 +918,8 @@
             <i class="lnr lnr-lock"></i>
           </div>
           <div class="support-desc">
-            <h6>Safe Payment</h6>
-            <span>Duis suscipit elit sem, sed mattis tellus accumsan.</span>
+            <h6>Thanh toán</h6>
+            <span>Thanh toán nhanh chóng và an toàn.</span>
           </div>
         </div>
         <div class="single-support">
@@ -1043,8 +927,8 @@
             <i class="lnr lnr-enter-down"></i>
           </div>
           <div class="support-desc">
-            <h6>Shop Confidence</h6>
-            <span>Faucibus dictum suscipit eget metus. Duis  elit sem, sed.</span>
+            <h6>Uy tín</h6>
+            <span>Phương châm <strong>Chữ tín quý hơn vàng.</strong></span>
           </div>
         </div>
         <div class="single-support">
@@ -1052,8 +936,8 @@
             <i class="lnr lnr-users"></i>
           </div>
           <div class="support-desc">
-            <h6>24/7 Help Center</h6>
-            <span>Quisque posuere enim augue, in rhoncus diam dictum non.</span>
+            <h6>24/7 Hỗ trợ</h6>
+            <span>Luôn sẵn sàng hỗ trợ và giải đáp thắc mắc <strong> 24/7.</strong></span>
           </div>
         </div>
       </div>
@@ -1070,13 +954,13 @@
         <div class="row mb-60">
           <div class="col-xl-7 col-lg-7 ml-auto mr-auto col-md-8">
             <div class="news-desc text-center mb-30">
-              <h3>Sign Up For Newsletters</h3>
-              <p>Be the First to Know. Sign up for newsletter today</p>
+              <h3>Đăng Ký Để Nhận Thông Tin Mới NHất</h3>
+              <p>Hãy là người đầu tiên biết. Đăng ký nhận bản tin ngay hôm nay</p>
             </div>
             <div class="newsletter-box">
               <form action="#">
-                <input class="subscribe" placeholder="your email address" name="email" id="subscribe" type="text">
-                <button type="submit" class="submit">subscribe!</button>
+                <input class="subscribe" placeholder="Nhập địa chỉ Email của bạn.." name="email" id="subscribe" type="text">
+                <button type="submit" class="submit">Theo dõi!</button>
               </form>
             </div>
           </div>
@@ -1086,15 +970,15 @@
           <!-- Single Footer Start -->
           <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="single-footer mb-sm-40">
-              <h3 class="footer-title">Information</h3>
+              <h3 class="footer-title"><strong>Thông Tin</strong></h3>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="#">Delivery Information</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="contact.html">Terms & Conditions</a></li>
+                  <li><a href="about.html">Về Chúng Tôi</a></li>
+                  <li><a href="#">Thông Tin Vận Chuyển</a></li>
+                  <li><a href="#">Chính Sách Bảo mật</a></li>
+                  <li><a href="contact.html">Điều Khoản & Điều Kiện</a></li>
                   <li><a href="login.html">FAQs</a></li>
-                  <li><a href="login.html">Return Policy</a></li>
+                  <li><a href="login.html">Phản Hồi</a></li>
                 </ul>
               </div>
             </div>
@@ -1103,15 +987,15 @@
           <!-- Single Footer Start -->
           <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="single-footer mb-sm-40">
-              <h3 class="footer-title">Customer Service</h3>
+              <h3 class="footer-title"><strong>Chăm Sóc Khách Hàng</strong></h3>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="#">Returns</a></li>
-                  <li><a href="#">Order History</a></li>
-                  <li><a href="wishlist.html">Wish List</a></li>
-                  <li><a href="#">Site Map</a></li>
-                  <li><a href="#">Gift Certificates</a></li>
+                  <li><a href="contact.html">Kết nối với chúng tôi</a></li>
+                  <li><a href="#">Lợi Nhuận</a></li>
+                  <li><a href="#">Lịch Sử Đặt Hàng</a></li>
+                  <li><a href="wishlist.html">Mục Yêu Thích</a></li>
+                  <li><a href="#">Địa Chỉ</a></li>
+                  <li><a href="#">Phiếu Quà Tặng</a></li>
                 </ul>
               </div>
             </div>
@@ -1120,15 +1004,15 @@
           <!-- Single Footer Start -->
           <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="single-footer mb-sm-40">
-              <h3 class="footer-title">Extras</h3>
+              <h3 class="footer-title"><strong>Bổ Sung</strong></h3>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="#">Newsletter</a></li>
-                  <li><a href="#">Brands</a></li>
-                  <li><a href="#">Gift Certificates</a></li>
-                  <li><a href="#">Affiliate</a></li>
-                  <li><a href="#">Specials</a></li>
-                  <li><a href="#">Site Map</a></li>
+                  <li><a href="#">Thông tin</a></li>
+                  <li><a href="#">Thương Hiệu</a></li>
+                  <li><a href="#">Phiếu Quà Tặng</a></li>
+                  <li><a href="#">Chi Nhánh</a></li>
+                  <li><a href="#">Đặc Biệt</a></li>
+                  <li><a href="#">Địa Chỉ</a></li>
                 </ul>
               </div>
             </div>
@@ -1137,15 +1021,15 @@
           <!-- Single Footer Start -->
           <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="single-footer mb-sm-40">
-              <h3 class="footer-title">Tài khoản</h3>
+              <h3 class="footer-title"><strong>Tài khoản của tôi</strong></h3>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="#">Returns</a></li>
-                  <li><a href="#">Tài Khoản</a></li>
-                  <li><a href="#">Order History</a></li>
-                  <li><a href="wishlist.html">Wish List</a></li>
-                  <li><a href="#">Newsletter</a></li>
+                  <li><a href="contact.html">Kết nối</a></li>
+                  <li><a href="#">Lợi Nhuận</a></li>
+                  <li><a href="#">Tài khoản của tôi</a></li>
+                  <li><a href="#">Lịch Sử Đặt Hàng</a></li>
+                  <li><a href="wishlist.html">Mục Yêu Thích</a></li>
+                  <li><a href="#">Thông Tin</a></li>
                 </ul>
               </div>
             </div>
@@ -1154,7 +1038,7 @@
           <!-- Single Footer Start -->
           <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="single-footer mb-sm-40">
-              <h3 class="footer-title">Tài Khoản</h3>
+              <h3 class="footer-title">Tài khoản của tôi</h3>
               <div class="footer-content">
                 <ul class="footer-list address-content">
                   <li><i class="lnr lnr-map-marker"></i> Address: 169-C, Technohub, Dubai Silicon Oasis.</li>
@@ -1164,7 +1048,7 @@
                   </li>
                 </ul>
                 <div class="payment mt-25 bdr-top pt-30">
-                  <a href="#"><img class="img" src="assets/img/payment/1.png" alt="payment-image"></a>
+                  <a href="#"><img class="img"  src="assets/img/payment/1.png" alt="payment-image"></a>
                 </div>
               </div>
             </div>
@@ -1185,8 +1069,8 @@
             <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
             <li><a href="https://plus.google.com/"><i class="fa fa-google-plus"></i></a></li>
             <li><a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><img src="assets/img/icon/social-img1.png" alt="google play"></a></li>
-            <li><a href="#"><img src="assets/img/icon/social-img2.png" alt="app store"></a></li>
+            <li><a href="#"><img  src="assets/img/icon/social-img1.png" alt="google play"></a></li>
+            <li><a href="#"><img  src="assets/img/icon/social-img2.png" alt="app store"></a></li>
           </ul>
         </div>
       </div>

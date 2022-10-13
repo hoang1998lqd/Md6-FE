@@ -33,13 +33,20 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
   listProduct!: MatTableDataSource<ProductDTO>
   products: ProductDTO [] = []
   brands: Brand [] = []
+  voucherForm!: FormGroup;
+  idVoucherUpdate!: number
+  vouchers: Voucher [] = []
+  listVoucher!: MatTableDataSource<Voucher>
+
   categories: Category [] = []
   productForm!: FormGroup;
   displayedColumns: string[] = ['stt', 'name', 'price', 'amount', 'color', 'image', 'edit', 'delete'];
 
   constructor(private productService: ProductService,
               private formGroup: FormBuilder,
+              private voucherService: VoucherService,
               private dialog: MatDialog,
+              private _liveAnnouncer: LiveAnnouncer,
   ) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/admin/vendor/jquery/jquery.min.js";
@@ -112,6 +119,14 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     this.displayProducts()
     this.displayBrands()
     this.displayCategories()
+    displayVoucher()
+    this.voucherForm = this.formGroup.group({
+      id: [''],
+      name: [''],
+      discount: [''],
+      quantity: [''],
+      customer: [''],
+    })
     this.productForm = this.formGroup.group({
       id: [''],
       name: [''],
@@ -225,6 +240,140 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
       this.dialog.open(FormCreateProductComponent, {width: '30%', data: value})
     })
   }
+  displayVoucher() {
+// @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
 
+    // @ts-ignore
+    document.getElementById('displayVocher').style.display = "block"
+    this.voucherService.findAllByStore_Id(5).subscribe(value => {
+      this.vouchers = value
+    })
+
+  }
+  setUpFormUpdate(voucher: Voucher) {
+    this.voucherForm.patchValue(voucher)
+    // @ts-ignore
+    document.getElementById("titleFrom").innerHTML = "Chỉnh sửa ";
+    // @ts-ignore
+    document.getElementById("buttonCreate")!.hidden = true
+    // @ts-ignore
+    document.getElementById("buttonUpdate")!.hidden = false
+    // @ts-ignore
+    document.getElementById("myModal").style.display = "block"
+  }
+  createVoucher() {
+    let voucher = {
+      id: this.voucherForm.value.id,
+      name: this.voucherForm.value.name,
+      discount: this.voucherForm.value.discount,
+      quantity: this.voucherForm.value.quantity,
+      customer: {
+        id: id
+      }
+    }
+    this.voucherService.createVoucher(voucher).subscribe(value => {
+      this.createSuccess()
+      // @ts-ignore
+      document.getElementById("myModal").style.display = "none"
+      this.displayVoucher()
+      console.log(value)
+    }, error => {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Tạo mới thất bại',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    })
+    // @ts-ignore
+    document.getElementById("rest").click()
+  }
+  updateVoucher(id?: number) {
+    // @ts-ignore
+    let voucher = {
+      id: id,
+      name: this.voucherForm.value.name,
+      discount: this.voucherForm.value.discount,
+      quantity: this.voucherForm.value.quantity,
+      customer: {
+        id: id
+      }
+    }
+    Swal.fire({
+      title: 'Bản có chắc chắn muốn chỉnh sửa?',
+      showDenyButton: true,
+      confirmButtonText: 'Chỉnh sửa',
+      denyButtonText: `Hủy`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.voucherService.updateVoucher(voucher).subscribe(value => {
+          this.setUpFormUpdate(value)
+          // @ts-ignore
+          document.getElementById("myModal").style.display = "none"
+          this.displayVoucher()
+        }, error => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Chỉnh sửa thất bại',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        Swal.fire('Chỉnh sửa thành công!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Hủy bỏ!', '', 'info')
+      }
+    })
+  }
+  closeFromCreate() {
+    // @ts-ignore
+    document.getElementById("createVoucher").style.display = "none"
+  }
+  deleteVoucher(id : any
+  ) {
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn xóa?',
+      text: "Dữ liệu sẽ không thể khôi phục!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý!',
+      cancelButtonText: 'Hủy',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.voucherService.deleteVoucher(id).subscribe(value => {
+          this.displayVoucher()
+        }, error => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa thất bại',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        Swal.fire(
+          'Xóa thành công!',
+          'Dữ liệu đã bị xóa bỏ',
+          'success'
+        )
+      }
+    })
+  }
+
+  createSuccess() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Tạo mới thành công',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
 
 }

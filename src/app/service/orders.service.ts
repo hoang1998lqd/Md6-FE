@@ -53,5 +53,8 @@ export class OrdersService {
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail-order/" + idOrder)
   }
 
-
+  //timf kiếm tất cả order theo shop_id
+  findAllOrderByShopId(idShop ?: number): Observable<Orders[]>{
+    return this.httpclient.get<Orders[]>("http://localhost:8081/api/orders/shop/" + idShop)
+  }
 }

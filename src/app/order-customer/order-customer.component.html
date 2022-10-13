@@ -71,8 +71,8 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Hành động</th>
               <td mat-cell *matCellDef="let row">
                 <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
-                        style="cursor: pointer; margin-left: 10px" routerLink="/checkout" *ngIf="row.status_order == 0">
-                  <mat-icon >done_outline</mat-icon>
+                        style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 0">
+                  <mat-icon routerLinkActive="/shopping-cart">done_outline</mat-icon>
                 </button>
                 <button mat-mini-fab color="accent" aria-label="Example icon button with a delete icon"
                         style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 0">

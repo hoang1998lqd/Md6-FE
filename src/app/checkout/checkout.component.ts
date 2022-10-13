@@ -114,7 +114,6 @@ export class CheckoutComponent implements OnInit {
     this.findItemByShopId()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
-    this.displayItem()
   }
 
   // Hiển thị Brand và Category

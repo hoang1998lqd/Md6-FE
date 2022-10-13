@@ -98,5 +98,4 @@ import {ShopComponent} from "./shop/shop.component";
 })
 
 
-// @ts-ignore
 export class AppModule { }

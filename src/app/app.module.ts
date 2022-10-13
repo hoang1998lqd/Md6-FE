@@ -22,13 +22,32 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxPaginationModule} from "ngx-pagination";
+<<<<<<< HEAD
 import { ShopComponent } from './shop/shop.component';
+=======
+import {AdminTableComponent} from "./admin-table/admin-table.component";
+import {AdminComponent} from "./admin/admin.component";
+import {FormCreateProductComponent} from "./form-create-product/form-create-product.component";
+import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
+import { AboutUsComponent } from './about-us/about-us.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+>>>>>>> 3c6a78831b1542942d90248bc8db9b4c0843080c
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+<<<<<<< HEAD
     ShopComponent
+=======
+    AdminTableComponent,
+    AdminComponent,
+    FormCreateProductComponent,
+    ShoppingCartComponent,
+    AboutUsComponent,
+    CheckoutComponent,
+
+>>>>>>> 3c6a78831b1542942d90248bc8db9b4c0843080c
   ],
   imports: [
     BrowserModule,

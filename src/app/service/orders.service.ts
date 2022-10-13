@@ -27,9 +27,9 @@ export class OrdersService {
     return this.httpclient.get<Orders[]>("http://localhost:8081/api/orders/shop/" + idShop)
   }
 
-  updateStatusOrder(idOrder ?: number){
-    // @ts-ignore
-    return this.httpclient.put("http://localhost:8081/api/orders/status-order/" + idOrder)
+  // UPdate lần 1 XÁC NHẬN CỦA CỬA HÀNG SẼ GỬI HÀNG VÀ TRỪ SỐ LƯỢNG SẢN PHẨM ĐÓ TRONG KHO
+  updateStatusOrder(orders ?: Orders):Observable<Orders>{
+    return this.httpclient.put<Orders>("http://localhost:8081/api/orders/update-quantity" , orders)
   }
   //Tìm kiếm thông tin chi tiết đơn hàng của NGƯỜI BÁN HÀNG đó
   findAllOrderDetailByShopId(idShop ?: number):Observable<OrderDetail[]>{

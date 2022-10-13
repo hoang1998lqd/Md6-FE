@@ -45,7 +45,7 @@ Version: 1.0;
     27. About Us CSS
     28. Contact Us CSS
     29. Popup Window CSS
-    
+
 -----------------------------------------------------*/
 
 /* googel font poppins */
@@ -546,7 +546,7 @@ ul {
 
 .cart-price {
     margin: 5px 0;
-} 
+}
 
 .cart-actions a {
     background: #2c2c2c none repeat scroll 0 0;
@@ -980,7 +980,7 @@ li.megamenu-img a {
 }
 
 .nivo-directionNav a:hover i {
-    color:#e62e04; 
+    color:#e62e04;
 }
 
 .nivo-directionNav a.nivo-prevNav {
@@ -1448,7 +1448,7 @@ li.megamenu-img a {
 }
 .col-img:hover img {
   transform: scale(1.1);
- 
+
 }
 
 /*----------------------------------------*/
@@ -1946,7 +1946,7 @@ li.megamenu-img a {
   padding-left: 0;
   position: static;
   transform: scale(1);
-}}
+}
 .hot-product2 .actions-primary a {
   transform: scale(1);
   width: 163px;
@@ -2794,7 +2794,7 @@ li.megamenu-img a {
   background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-expand.png") no-repeat scroll 20px 9px;
 }
 .category-menu.v-cat-menu .has-sub.open > a{
-    background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-collapse.png") no-repeat scroll 20px 9px;  
+    background: rgba(0, 0, 0, 0) url("img/vertical-menu/icon-collapse.png") no-repeat scroll 20px 9px;
 }
 /*img/vertical-menu/icon-expand.png*/
 .category-menu.v-cat-menu ul li.has-sub > a::after {
@@ -3439,7 +3439,7 @@ ul.tag-list > li > a {
 .product-description i {
   color: #666;
   font-size: 16px;
-} 
+}
 
 .product-description .compare-cart,.cart-main-area.wish-list .product-add-to-cart a {
   font-size: 13px;
@@ -4013,6 +4013,7 @@ p.checkout-coupon input[type="submit"] {
     margin-bottom: 30px;
     overflow: hidden;
 }
+
 
 .buttons-cart input,
 .coupon input[type="submit"],

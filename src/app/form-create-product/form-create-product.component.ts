@@ -27,7 +27,7 @@ export class FormCreateProductComponent implements OnInit, AfterContentChecked {
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
 
-  actionBtn : string = "Create"
+  actionBtn : string = "Đăng bán"
   idBrandUpdate !: number
   idCategoryUpdate !: number
   customerCurrentId!: any
@@ -108,18 +108,18 @@ export class FormCreateProductComponent implements OnInit, AfterContentChecked {
     this.productForm = this.formGroup.group({
       id: [''],
       name: ['',Validators.required],
-      price: ['',[Validators.required,Validators.pattern("[1-9]")]],
-      amount: ['',Validators.required],
+      price: ['',[Validators.required,Validators.pattern("^(0|[1-9][0-9]{0,2})(\\d{3})*(\\\\d{1,2})?$")]],
+      amount: ['',[Validators.required,Validators.pattern("^(0|[1-9][0-9]{0,2})(\\d{3})*(\\\\d{1,2})?$")]],
       color: ['',Validators.required],
       description: [''],
       status: [''],
-      discount: ['',Validators.pattern("[0-9]")],
+      discount: ['',[Validators.pattern("^(0|[1-9][0-9]{0,2})(\\d{3})*(\\\\d{1,2})?$"),Validators.min(0),Validators.max(100)]],
       brand: ['',Validators.required],
       category: ['',Validators.required],
       customer: [''],
     })
     if (this.editData){
-      this.actionBtn = "Update"
+      this.actionBtn = "Cập nhật"
       this.productForm.patchValue(this.editData)
       this.productForm.controls['color'].setValue(this.editData.color)
       this.productForm.controls['description'].setValue(this.editData.description)

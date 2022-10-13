@@ -44,7 +44,7 @@ export class CheckoutComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
-  DTOItemCheckOut: DTOItem [] = []
+
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,

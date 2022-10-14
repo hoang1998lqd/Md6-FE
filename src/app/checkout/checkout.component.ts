@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import {OrderDetail} from "../model/OrderDetail";
 import {CategoryBrand} from "../model/CategoryBrand";
 import {CategoryBrandService} from "../service/category-brand.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-checkout',
@@ -48,7 +49,8 @@ export class CheckoutComponent implements OnInit {
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
-              private orderService: OrdersService) {
+              private orderService: OrdersService,
+              private router: Router) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -320,9 +322,10 @@ export class CheckoutComponent implements OnInit {
           })
         }
         this.createSuccess()
-        setTimeout(() => {
-          window.location.reload()
-        }, 1700)
+        // setTimeout(() => {
+        //   window.location.reload()
+        // }, 1700)
+
       })
     })
   }
@@ -334,6 +337,8 @@ export class CheckoutComponent implements OnInit {
       title: 'Đặt hàng thành công',
       showConfirmButton: false,
       timer: 1500
+    }).finally(() =>{
+      this.router.navigate(["/"])
     })
   }
 

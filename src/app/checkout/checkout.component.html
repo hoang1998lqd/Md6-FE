@@ -139,9 +139,9 @@
     <div class="header-bottom  header-sticky">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
-            <span class="categorie-title">Danh mục sản phẩm</span>
-          </div>
+<!--          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">-->
+<!--            <span class="categorie-title">Danh mục sản phẩm</span>-->
+<!--          </div>-->
           <div class="col-xl-9 col-lg-8 col-md-12 ">
             <nav class="d-none d-lg-block">
               <ul class="header-bottom-list d-flex">
@@ -149,16 +149,16 @@
                 </li>
                 <li><a href="shop.html">Mua Sắm</a>
                 </li>
-                <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
-                  <!-- Home Version Dropdown Start -->
-                  <ul class="ht-dropdown dropdown-style-two">
-                    <li><a href="single-blog.html">blog details</a></li>
-                  </ul>
-                  <!-- Home Version Dropdown End -->
-                </li>
-                <li><a href="#">Quản lý cửa hàng</a>
-                <li><a href="about.html">Giới thiệu</a></li>
-                <li><a href="contact.html">Kết nối</a></li>
+<!--                <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>-->
+<!--                  &lt;!&ndash; Home Version Dropdown Start &ndash;&gt;-->
+<!--                  <ul class="ht-dropdown dropdown-style-two">-->
+<!--                    <li><a href="single-blog.html">blog details</a></li>-->
+<!--                  </ul>-->
+<!--                  &lt;!&ndash; Home Version Dropdown End &ndash;&gt;-->
+<!--                </li>-->
+                <li><a routerLink="/admin">Quản lý cửa hàng</a>
+<!--                <li><a href="about.html">Giới thiệu</a></li>-->
+<!--                <li><a href="contact.html">Kết nối</a></li>-->
               </ul>
             </nav>
           </div>
@@ -201,17 +201,17 @@
   </div>
   <!-- Categorie Menu & Slider Area End Here -->
   <!-- Breadcrumb Start -->
-  <div class="breadcrumb-area mt-30">
-    <div class="container">
-      <div class="breadcrumb">
-        <ul class="d-flex align-items-center">
-          <li><a href="index.html">Trang chủ</a></li>
-          <li class="active"><a href="checkout.html">Thanh toán</a></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Container End -->
-  </div>
+<!--  <div class="breadcrumb-area mt-30">-->
+<!--    <div class="container">-->
+<!--      <div class="breadcrumb">-->
+<!--        <ul class="d-flex align-items-center">-->
+<!--          <li><a href="index.html">Trang chủ</a></li>-->
+<!--          <li class="active"><a href="checkout.html">Thanh toán</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; Container End &ndash;&gt;-->
+<!--  </div>-->
   <!-- Breadcrumb End -->
   <!-- coupon-area start -->
   <div class="coupon-area pt-30 pt-sm-60">
@@ -220,7 +220,7 @@
         <div class="col-md-12">
           <div class="coupon-accordion">
             <!-- ACCORDION START -->
-            <h3>Bạn đã có mã giảm giá? <span id="showcoupon">Click vào đây để nhập mã.</span></h3>
+            <h3 style="cursor: pointer" routerLink="/shopping-cart">Quay lại giỏ hàng</h3>
             <div id="checkout_coupon" class="coupon-checkout-content">
               <div class="coupon-info">
                 <form action="#">
@@ -382,7 +382,7 @@
               </div>
             </div>
               <div class="buttons-cart" style="margin-top: 15px; margin-left: 315px">
-                <a style="margin-left: 10px" href="#" (click)="createOrder()">Tiến hành đặt hàng</a>
+                <a class="checkout-btn-css" style="margin-left: 10px; background-color: black; color: white; cursor: pointer;"  (click)="createOrder()">Tiến hành đặt hàng</a>
 
             </div>
           </div>

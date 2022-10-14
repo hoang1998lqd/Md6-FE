@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
+import {ProductComponent} from "./product/product.component";
 import {AdminTableComponent} from "./admin-table/admin-table.component";
 import {AdminComponent} from "./admin/admin.component";
 import {HomeComponent} from "./home/home.component";
@@ -12,109 +15,113 @@ import {UserDetailComponent} from "./user-detail/user-detail.component";
 
 const routes: Routes = [
   {
+    path: "", component: HomeComponent,
+  },
+  {
+    path: "login", component: LoginComponent,
+    children:[
+      {
+        path: "register", component: RegisterComponent,
+      }
+    ]
+  },
+  {
+    path: "register", component: RegisterComponent,
+    children:[
+      {
+        path: "login", component: LoginComponent
+      }
+    ]
+  },
+  {
+    path: "product", component: ProductComponent
+  },
+  {
     path: "admin-table", component: AdminTableComponent,
+    children:[
+      {
+        path: "order-shop", component: OrderShopComponent
+      },
+      {
+        path: "admin", component: AdminComponent
+      }
+    ]
   },
   {
     path: "admin", component: AdminComponent,
+    children:[
+      {
+        path: "admin-table", component: AdminTableComponent
+      },
+      {
+        path: "order-shop", component: OrderShopComponent
+      }
+    ]
   },
   {
-    path:"", component: HomeComponent
-  },
-  {
-    path:"shopping-cart", component: ShoppingCartComponent
+    path:"shopping-cart", component: ShoppingCartComponent,
+    children:[
+      {
+        path: "user-detail", component: UserDetailComponent
+      },
+      {
+        path: "admin", component: AdminComponent
+      },
+      {
+        path: "checkout", component: CheckoutComponent
+      }
+    ]
   },
   {
     path:"about", component: AboutUsComponent
   },
   {
-    path:"checkout", component: CheckoutComponent
+    path:"checkout", component: CheckoutComponent,
+    children:[
+      {
+        path: "user-detail", component: UserDetailComponent
+      },
+      {
+        path: "admin", component: AdminComponent
+      },
+      {
+        path: "shopping-cart", component: ShoppingCartComponent
+      }
+    ]
   },
   {
-    path:"order-shop", component: OrderShopComponent
+    path:"order-shop", component: OrderShopComponent,
+    children:[
+      {
+        path: "admin", component: AdminComponent
+      },
+      {
+        path: "admin-table", component: AdminTableComponent
+      }
+    ]
   },
+
  {
     path:"user-detail", component: UserDetailComponent
   },
 
-  // {
-  //   path:"shop", component: ShopComponent,
-  //   children: [
-  //     {
-  //       path: "shopping-cart", component: ShoppingCartComponent
-  //     },
-  //     {
-  //       path: "", component: HomeComponent
-  //     },
-  //     {
-  //       path: "login-register", component: LoginRegisterComponent
-  //     },
-  //     {
-  //       path: "**", component: PageNotFoundComponent
-  //     },
-  //     {
-  //       path: "single-product", component: SingleProductComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "single-product", component: SingleProductComponent
-  // },{
-  //   path: "order-shop", component: OrderShopComponent
-  // },
-  // {
-  //   path:"shopping-cart", component: ShoppingCartComponent,
-  //   children: [
-  //     {
-  //       path: "shop", component: ShopComponent
-  //     },
-  //     {
-  //       path: "", component: HomeComponent
-  //     },
-  //     {
-  //       path: "login-register", component: LoginRegisterComponent
-  //     },
-  //     {
-  //       path: "**", component: PageNotFoundComponent
-  //     },
-  //     {
-  //       path: "checkout", component: CheckoutComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "checkout", component: CheckoutComponent
-  // },
-  // {
-  //   path: "login-register", component: LoginRegisterComponent,
-  //   children:[
-  //     {
-  //       path: "", component: HomeComponent
-  //     },
-  //     {
-  //       path: "shop", component: ShopComponent
-  //     },
-  //     {
-  //       path: "shopping-cart", component: ShoppingCartComponent
-  //     },
-  //     {
-  //       path: "**", component: PageNotFoundComponent
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "**", component: PageNotFoundComponent,
-  //   children:[
-  //     {
-  //       path: "", component: HomeComponent
-  //     }
-  //   ]
-  // },
+  {
+    path: "user-detail", component: UserDetailComponent,
+    children:[
+      {
+        path: "admin", component: AdminComponent
+      },
+      {
+        path: "shopping-cart", component: ShoppingCartComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule { }
+export const RoutingComponent =
+  [HomeComponent, LoginComponent, RegisterComponent, ProductComponent]

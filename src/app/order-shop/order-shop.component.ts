@@ -104,9 +104,9 @@ export class OrderShopComponent implements OnInit {
     script.href = "./assets/admin/vendor/datatables/dataTables.bootstrap4.min.css";
     script.rel = "stylesheet";
     document.body.appendChild(script);
-    const script4 = document.createElement('body');
-    script4.id = "page-top"
-    document.body.appendChild(script4);
+    // const script4 = document.createElement('body');
+    // script4.id = "page-top"
+    // document.body.appendChild(script4);
     const script5 = document.createElement('link');
     script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
     script2.rel = "stylesheet";

@@ -55,6 +55,7 @@ export class ShoppingCartComponent implements OnInit {
   listShopCurrent: Customer [] = []
   subtasks = {name: 'Warn', completed: false, color: 'warn'}
   categoryBrands: CategoryBrand[] = []
+  username?: any
   constructor(private productService: ProductService,
               private cartService: CartService,
               private customerService: CustomerService,
@@ -119,6 +120,7 @@ export class ShoppingCartComponent implements OnInit {
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
+    this.username = localStorage.getItem("username")
     this.displayItem()
     this.findProductByCustomerId()
     this.findAllCustomerHaveShop()

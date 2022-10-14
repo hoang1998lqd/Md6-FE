@@ -44,6 +44,7 @@ export class UserDetailComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
+  username?: any
 
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
@@ -108,6 +109,7 @@ export class UserDetailComponent implements OnInit {
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
+    this.username = localStorage.getItem("username")
     this.findCurrentCustomer()
     // this.displayItem()
     this.findAllDTOItem()

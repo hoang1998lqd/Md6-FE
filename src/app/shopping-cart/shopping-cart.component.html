@@ -54,7 +54,7 @@
               <ul class="ht-dropdown">
                 <li *ngIf="idCurrentCustomer != 0">
                   <a style="cursor: pointer" (click)="logOut()" >Đăng Xuất</a>
-                  <a href="login.html" >Thông tin cá nhân</a>
+                  <a routerLink="/user-detail" >Thông tin cá nhân</a>
                   <a href="login.html" >Lịch sử mua hàng</a></li>
                 <li  *ngIf="idCurrentCustomer == 0"><a href="register.html">Đăng Nhập</a></li>
               </ul>
@@ -73,7 +73,7 @@
         <div class="row align-items-center no-gutters">
           <div class="col-lg-3 col-md-12">
             <div class="logo mb-all-30">
-              <a href="index.html"><img src="assets/img/logo/logo.png" alt="logo-image"></a>
+              <a routerLink="/"><img src="assets/img/logo/logo.png" alt="logo-image"></a>
             </div>
           </div>
           <!-- Categorie Search Box Start Here -->
@@ -120,10 +120,10 @@
                     </li>
                   </ul>
                 </li>
-                <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Danh sách</span><span>Yêu thích (0)</span></span></a>
-                </li>
+<!--                <li><a href="#"><i class="lnr lnr-heart"></i><span class="my-cart"><span>Danh sách</span><span>Yêu thích (0)</span></span></a>-->
+<!--                </li>-->
                 <li *ngIf="idCurrentCustomer == 0"><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Đăng nhập</strong> Or</span><span>Thành viên mới</span></span></a>
-                <li *ngIf="idCurrentCustomer != 0"><a href="#"><i class="lnr lnr-user"></i><span class="my-cart"><span> <strong>Xin chào</strong> </span><span>{{idCurrentCustomer}} !!</span></span></a>
+                <li *ngIf="idCurrentCustomer != 0"><a href="#"><i class="lnr lnr-user"></i><span style="text-align: center; font-weight: 500" class="my-cart"><span> <strong>Xin chào</strong> </span><span>{{username}}</span></span></a>
                 </li>
               </ul>
             </div>
@@ -139,26 +139,26 @@
     <div class="header-bottom  header-sticky">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
-            <span class="categorie-title">Danh mục sản phẩm</span>
-          </div>
+<!--          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">-->
+<!--            <span class="categorie-title">Danh mục sản phẩm</span>-->
+<!--          </div>-->
           <div class="col-xl-9 col-lg-8 col-md-12 ">
             <nav class="d-none d-lg-block">
               <ul class="header-bottom-list d-flex">
-                <li class="active"><a href="index.html">Trang chủ</a>
+                <li class="active"><a routerLink="/">Trang chủ</a>
                 </li>
                 <li><a href="shop.html">Mua Sắm</a>
                 </li>
-                <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>
-                  <!-- Home Version Dropdown Start -->
-                  <ul class="ht-dropdown dropdown-style-two">
-                    <li><a href="single-blog.html">blog details</a></li>
-                  </ul>
-                  <!-- Home Version Dropdown End -->
-                </li>
-                <li><a href="#">Quản lý cửa hàng<i class="fa fa-angle-down"></i></a>
-                <li><a href="about.html">Giới thiệu</a></li>
-                <li><a href="contact.html">Kết nối</a></li>
+<!--                <li><a href="blog.html">blog<i class="fa fa-angle-down"></i></a>-->
+<!--                  &lt;!&ndash; Home Version Dropdown Start &ndash;&gt;-->
+<!--                  <ul class="ht-dropdown dropdown-style-two">-->
+<!--                    <li><a href="single-blog.html">blog details</a></li>-->
+<!--                  </ul>-->
+<!--                  &lt;!&ndash; Home Version Dropdown End &ndash;&gt;-->
+<!--                </li>-->
+                <li><a routerLink="/admin">Quản lý cửa hàng</a>
+<!--                <li><a href="about.html">Giới thiệu</a></li>-->
+<!--                <li><a href="contact.html">Kết nối</a></li>-->
               </ul>
             </nav>
           </div>
@@ -205,7 +205,7 @@
     <div class="container">
       <div class="breadcrumb">
         <ul class="d-flex align-items-center">
-          <li><a href="index.html">Trang chủ</a></li>
+          <li><a routerLink="/">Trang chủ</a></li>
           <li class="active"><a href="cart.html">Giỏ hàng</a></li>
         </ul>
       </div>
@@ -268,7 +268,7 @@
                 <div class="col-md-8 col-sm-12">
                   <div class="buttons-cart">
                     <input type="button" style="text-align: center" value="Cập nhật giỏ hàng" (click)="updateQuantityItem()" />
-                    <a href="#">Tiếp tục mua sắm</a>
+                    <a routerLink="/">Tiếp tục mua sắm</a>
                   </div>
                 </div>
                 <!-- Cart Button Start -->
@@ -299,7 +299,7 @@
                       </tbody>
                     </table>
                     <div class="wc-proceed-to-checkout">
-                      <a href="#" (click)="saveIdShop(shop.id)">Tiến hành thanh toán</a>
+                      <a routerLink="/checkout" (click)="saveIdShop(shop.id)">Tiến hành thanh toán</a>
                     </div>
                   </div>
                 </div>
@@ -351,7 +351,7 @@
                       </tbody>
                     </table>
                     <div class="wc-proceed-to-checkout">
-                      <a href="#" >Tiến hành thanh toán</a>
+                      <a routerLink="/checkout" >Tiến hành thanh toán</a>
                     </div>
                   </div>
                 </div>

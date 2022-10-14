@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule, RoutingComponent} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -22,11 +22,20 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxPaginationModule} from "ngx-pagination";
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {httpInterceptorProviders} from "./helper/jwt-interceptor";
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RoutingComponent,
+    RegisterComponent,
+    ProductComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -51,7 +60,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     MatCheckboxModule,
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

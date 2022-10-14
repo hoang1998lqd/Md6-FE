@@ -83,4 +83,13 @@ export class ProductService {
     return this.httpClient.get<ProductDTO>("http://localhost:8081/api/products/detail-product/" + idCustomer + "&" + idProduct)
   }
 
+  // @ts-ignore
+  findProductByPrice(idCustomer?: any, priceMin: number, priceMax: number): Observable<ProductDTO[]> {
+    return this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/find-by-price/" + priceMin + "&" + priceMax + "&" + idCustomer)
+  }
+
+  findProductByName(idCustomer?: any, name?: string): Observable<ProductDTO[]> {
+    return this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/find-name-products/" + name + "&" + idCustomer);
+  }
+
 }

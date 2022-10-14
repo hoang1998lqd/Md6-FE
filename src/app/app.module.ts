@@ -29,6 +29,7 @@ import {FormCreateProductComponent} from "./form-create-product/form-create-prod
 import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SingleProductComponent } from './single-product/single-product.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ShoppingCartComponent,
     AboutUsComponent,
     CheckoutComponent,
+    SingleProductComponent,
 
   ],
   imports: [

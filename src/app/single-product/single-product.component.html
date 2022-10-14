@@ -79,8 +79,8 @@
             <div class="categorie-search-box">
               <form action="#">
 
-                <input type="text" name="search" id="searchByName" placeholder="Bạn đang mua ...">
-                <button><i class="lnr lnr-magnifier" (click)="searchByNameProduct()"></i></button>
+                <input type="text" name="search" placeholder="Bạn đang mua ...">
+                <button><i class="lnr lnr-magnifier"></i></button>
               </form>
             </div>
           </div>
@@ -240,14 +240,14 @@
                       <li><span style="cursor: pointer" (click)="findAllProductByCategoryIdAndBrandId(categoryBrand.category!.id, brand.id)">{{brand.name}}</span></li>
 
                       <!--                      <li><a href="shop.html">Cords and Cables</a></li>-->
-<!--                      <li><a href="shop.html">gps accessories</a></li>-->
-<!--                      <li><a href="shop.html">Microphones</a></li>-->
-<!--                      <li><a href="shop.html">Wireless Transmitters</a></li>-->
+                      <!--                      <li><a href="shop.html">gps accessories</a></li>-->
+                      <!--                      <li><a href="shop.html">Microphones</a></li>-->
+                      <!--                      <li><a href="shop.html">Wireless Transmitters</a></li>-->
                     </ul>
 
                     <!-- category submenu end-->
                   </li>
-<!--                  -->
+                  <!--                  -->
                 </ul>
               </div>
               <!-- category-menu-end -->
@@ -256,19 +256,19 @@
             <!-- Price Filter Options Start -->
             <div class="search-filter mb-40">
               <h3 class="sidebar-title">filter by price</h3>
-<!--              <form action="#" class="sidbar-style">-->
-<!--                <div id="slider-range"></div>-->
-<!--                <input type="text" id="amount" class="amount-range" readonly>-->
-<!--              </form>-->
+              <!--              <form action="#" class="sidbar-style">-->
+              <!--                <div id="slider-range"></div>-->
+              <!--                <input type="text" id="amount" class="amount-range" readonly>-->
+              <!--              </form>-->
               <div>
                 <a style="display: flex; align-items: center; justify-content: space-evenly">
 
-                    <input id="priceMin" style="border-radius: 4px;width: 80%; height:25px; border:1px solid;">
+                  <input id="priceMin" style="border-radius: 4px;width: 80%; height:25px; border:1px solid;">
 
                   <i class="fa fa-minus" aria-hidden="true" style="    padding: 0 10px;"></i>
 
 
-                    <input id="priceMax" style="border-radius: 4px;width: 80%; height:25px;border: 1px solid;">
+                  <input id="priceMax" style="border-radius: 4px;width: 80%; height:25px;border: 1px solid;">
 
                 </a>
                 <button (click)="searchByPrice()" class="custom-btn btn-16" style="float: right;margin-top: 20px ;margin-right: 10px; font-size: 16px;border-radius: 4px;    font-weight: 300;
@@ -569,13 +569,7 @@
               <div id="grid-view" class="tab-pane fade show active">
                 <div class="row">
                   <!-- Single Product Start -->
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-6" *ngFor="let p of listProduct | paginate
-                  : {
-                  itemsPerPage: tableSize,
-                  currentPage: page,
-                  totalItems: count
-                };
-              let i = index">
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-6" *ngFor="let p of listProduct">
                     <div class="single-product">
                       <!-- Product Image Start -->
                       <div class="pro-img">

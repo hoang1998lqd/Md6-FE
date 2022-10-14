@@ -7,6 +7,7 @@ import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import {AboutUsComponent} from "./about-us/about-us.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {OrderShopComponent} from "./order-shop/order-shop.component";
+import {UserDetailComponent} from "./user-detail/user-detail.component";
 
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path:"order-shop", component: OrderShopComponent
+  },
+ {
+    path:"user-detail", component: UserDetailComponent
   },
 
   // {

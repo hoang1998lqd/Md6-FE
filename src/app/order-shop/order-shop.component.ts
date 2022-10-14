@@ -133,7 +133,7 @@ export class OrderShopComponent implements OnInit {
 
   updateStatusExist(idOrder ?: number) {
     Swal.fire({
-      title: 'Bạn có chắc chắn muốn xóa?',
+      title: 'Bạn có chắc muốn hủy đơn hàng?',
       text: "Dữ liệu sẽ không thể khôi phục!",
       icon: 'warning',
       showCancelButton: true,

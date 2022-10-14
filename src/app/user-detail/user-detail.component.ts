@@ -274,58 +274,6 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  // Cần thay đổi Id của cửa hàng
-
-  createOrder() {
-    // @ts-ignore
-    let idShop = parseInt(localStorage.getItem("idShop"))
-    // @ts-ignore
-    let description = document.getElementById('checkout-mess').value
-    let order = {
-      description: description,
-      customer: {
-        id: this.currentCustomer.id
-      },
-      shop_id: idShop
-    }
-    // @ts-ignore
-    return this.orderService.createOrder(order).subscribe(value => {
-      let orderDetails: OrderDetail [] = [];
-      let dtoItemCheckOut = this.findItemByShopId()
-      console.log(dtoItemCheckOut)
-      for (let i = 0; i < dtoItemCheckOut.length; i++) {
-        // @ts-ignore
-        let quantity = dtoItemCheckOut[i].item.quantity
-        // @ts-ignore
-        let orderDetail = {
-          quantity: quantity,
-          orders: {
-            id: value.id
-          },
-          product: {
-            id: dtoItemCheckOut[i].item.product.id
-          }
-        }
-        orderDetails.push(orderDetail)
-      }
-      console.log("Trước khi lưu" + orderDetails)
-      return this.orderService.createOrderDetail(orderDetails).subscribe(value1 => {
-        console.log(value1)
-        // @ts-ignore
-        document.getElementById('checkout-mess').value = ""
-        for (let i = 0; i < dtoItemCheckOut.length; i++) {
-          // @ts-ignore
-          this.cartService.deleteItem(dtoItemCheckOut[i].item.id).subscribe(() =>{
-            localStorage.removeItem("idShop")
-          })
-        }
-        this.createSuccess()
-        setTimeout(() => {
-          window.location.reload()
-        }, 1700)
-      })
-    })
-  }
 
   createSuccess() {
     Swal.fire({

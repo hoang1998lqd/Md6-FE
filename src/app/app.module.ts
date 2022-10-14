@@ -33,9 +33,10 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import {OrderModule} from "ngx-order-pipe";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
-=======
+
 import {ShopComponent} from "./shop/shop.component";
 import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
     CheckoutComponent,
     OrderShopComponent,
     OrderDetailComponent,
+    UserDetailComponent,
 
   ],
   imports: [

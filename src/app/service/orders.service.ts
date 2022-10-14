@@ -33,6 +33,7 @@ export class OrdersService {
     return this.httpclient.put("http://localhost:8081/api/orders/update-quantity/" +idOrder)
   }
   //Tìm kiếm thông tin chi tiết đơn hàng của NGƯỜI BÁN HÀNG đó
+
   findAllOrderDetailByShopId(idShop ?: number):Observable<OrderDetail[]>{
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/shop&"+ idShop)
   }

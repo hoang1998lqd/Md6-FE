@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {OrdersService} from "../service/orders.service";
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +14,12 @@ export class AdminComponent implements OnInit {
   myScriptElement4: HTMLScriptElement;
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
-  constructor() {
+
+  turnover :number = 0
+  totalOrder :number = 0;
+  totalOrderShip : number = 0
+
+  constructor(private  orderService : OrdersService) {
 
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/admin/vendor/jquery/jquery.min.js";
@@ -62,6 +68,10 @@ export class AdminComponent implements OnInit {
     script4.id = "page-top"
     document.body.appendChild(script4);
 
+
+    this.findAllOrderDetailByShopId()
+    this.findAllOrderByShopId()
+
   }
 
   ngAfterContentChecked(){
@@ -88,4 +98,45 @@ export class AdminComponent implements OnInit {
     // document.body.appendChild(script11);
   }
 
+  // Thống kế tất cả đơn hàng của CỬA HÀNG ĐÓ ĐỂ TÍNH LỢI NHUẬN TỔNG
+  findAllOrderDetailByShopId(){
+    // @ts-ignore
+    let idShop = parseInt(localStorage.getItem("idCustomer"))
+    return this.orderService.findAllOrderDetailByShopId(idShop).subscribe(value => {
+      console.log(value)
+      for (let i = 0; i < value.length; i++) {
+        // @ts-ignore
+        this.turnover += value[i].quantity * value[i].product!.price
+      }
+    })
+
+  }
+
+  changePrice(money?: number): any {
+    const formatter = new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'VND',
+      // minimumFractionDigits: 2
+    })
+    if (money != null) {
+      return formatter.format(money);
+    }
+  }
+
+  //Thống kế tổng số đơn hàng đã được đặt của CỬA HÀNG ĐÓ
+  findAllOrderByShopId(){
+    // @ts-ignore
+    let idShop = parseInt(localStorage.getItem("idCustomer"))
+    return this.orderService.findAllOrderByShopId(idShop).subscribe(value => {
+      this.totalOrder = value.length
+      let totalShip : number = 0
+      for (let i = 0; i < value.length; i++) {
+        if (value[i].status_order == 1){
+          totalShip ++
+        }
+      }
+      // @ts-ignore
+      this.totalOrderShip = ((totalShip/value.length).toFixed(2)) *100
+    })
+  }
 }

@@ -32,6 +32,12 @@ export class OrdersService {
     // @ts-ignore
     return this.httpclient.put("http://localhost:8081/api/orders/update-quantity/" +idOrder)
   }
+
+  updateStatusOrderCustomer(idOrder ?: any){
+    // @ts-ignore
+    return this.httpclient.put("http://localhost:8081/api/orders/order-customer/" +idOrder)
+  }
+
   //Tìm kiếm thông tin chi tiết đơn hàng của NGƯỜI BÁN HÀNG đó
 
   findAllOrderDetailByShopId(idShop ?: number):Observable<OrderDetail[]>{
@@ -43,6 +49,8 @@ export class OrdersService {
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail/" + idOrder)
   }
 
-
+  findAllOrderByCustomerId(idCustomer: number): Observable<Orders[]>{
+    return this.httpclient.get<Orders[]>("http://localhost:8081/api/orders/order-customer/"+idCustomer)
+  }
 
 }

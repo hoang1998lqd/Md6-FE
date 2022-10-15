@@ -31,6 +31,9 @@ const routes: Routes = [
   {
     path:"order-shop", component: OrderShopComponent
   },
+  {
+    path: "order-customer", component: OrderShopComponent
+  },
 
   // {
   //   path:"shop", component: ShopComponent,

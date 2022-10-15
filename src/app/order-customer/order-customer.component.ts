@@ -4,26 +4,30 @@ import {OrdersService} from "../service/orders.service";
 import {Orders} from "../model/Orders";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-
-import Swal from "sweetalert2";
 import {CustomerService} from "../service/customer.service";
+// @ts-ignore
 import {OrderDetail} from "../model/OrderDetail";
-import {ProductService} from "../service/product.service";
-import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSort} from "@angular/material/sort";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
-
+import Swal from "sweetalert2";
+import {Customer} from "../model/Customer";
 
 
 @Component({
-  selector: 'app-order-shop',
-  templateUrl: './order-shop.component.html',
-  styleUrls: ['./order-shop.component.css'],
+  selector: 'app-order-customer',
+  templateUrl: './order-customer.component.html',
+  styleUrls: ['./order-customer.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
-export class OrderShopComponent implements OnInit {
-
-
+export class OrderCustomerComponent implements OnInit {
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
   myScriptElement2: HTMLScriptElement;
@@ -32,9 +36,11 @@ export class OrderShopComponent implements OnInit {
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
 
-
+  currentCustomer!: Customer;
+  // DTOItems: DTOItem [] = []
   displayedColumns: string[] = ['stt', 'dateOrder', 'dateShip', 'description', 'customer', 'status_order', 'status_pay', 'action'];
-  listOrderOfShop !: Orders[]
+  listOrder !: Orders[]
+  orders!: Orders
   listOrderDetail : OrderDetail [] = []
   searchText:any
   term: string = ""
@@ -73,6 +79,7 @@ export class OrderShopComponent implements OnInit {
 
   }
 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -85,6 +92,7 @@ export class OrderShopComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
+    // console.log(this.dataSource)
     const script1 = document.createElement('link');
     script1.href = "./assets/admin/vendor/fontawesome-free/css/all.min.css";
     script1.rel = "stylesheet";
@@ -111,30 +119,34 @@ export class OrderShopComponent implements OnInit {
     script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
     script2.rel = "stylesheet";
     document.body.appendChild(script5);
-    this.findAllOrderByShopId()
-    // this.findAllOrderDetailByShopId()
+
+
+    this.findAllOrderByCustomerId()
+    // this.findAllOrderDetailByCustomerId()
+    // this.findAllOrderDetail()
+
   }
 
-
-  // Content
   logOut(){
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login-register")
   }
-  findAllOrderByShopId() {
+
+  findAllOrderByCustomerId() {
     // @ts-ignore
-    let idShop = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderByShopId(idShop).subscribe(value => {
-      console.log(value)
-      this.dataSource = new MatTableDataSource<Orders>(value)
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.orderService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
+       this.dataSource = new MatTableDataSource(value)
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
+
+      console.log(value)
     })
   }
 
   updateStatusExist(idOrder ?: number) {
     Swal.fire({
-      title: 'Bạn có chắc chắn muốn xóa?',
+      title: 'Bạn có chắc chắn muốn hủy đơn hàng?',
       text: "Dữ liệu sẽ không thể khôi phục!",
       icon: 'warning',
       showCancelButton: true,
@@ -149,7 +161,7 @@ export class OrderShopComponent implements OnInit {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Đã từ chối đơn hàng',
+            title: 'Đã hủy đơn hàng',
             showConfirmButton: false,
             timer: 1500
           })
@@ -164,8 +176,8 @@ export class OrderShopComponent implements OnInit {
   }
 
   // Chuyển STATUS_ORDER sang 1 là phần gửi hàng
-  updateStatusOrderFirst(idOrder ?: any){
-    this.orderService.updateStatusOrder(idOrder).subscribe(value => {
+  updateStatusOrder(idOrder ?: any){
+    this.orderService.updateStatusOrderCustomer(idOrder).subscribe(value => {
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -180,6 +192,28 @@ export class OrderShopComponent implements OnInit {
 
   }
 
+
+  // findAllOrderDetailByCustomerId(){
+  //   // @ts-ignore
+  //   let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+  //   return this.ordersService.findAllOrderDetailByCustomerId(idCustomer).subscribe(value => {
+  //     this.listOrderDetail = value
+  //   })
+  // }
+  //
+  //
+  // findAllOrderDetail(idOrder ?: number) {
+  //   let orderDetails : OrderDetail [] = []
+  //   for (let i = 0; i < this.listOrderDetail.length; i++) {
+  //     if (idOrder == this.listOrderDetail[i].orders!.id) {
+  //       orderDetails.push(this.listOrderDetail[i])
+  //     }
+  //   }
+  //   console.log(orderDetails)
+  //   // return orderDetails;
+  // }
+
+
   // Content
   openDialog(idOrder ?: any) {
     localStorage.setItem("idOrder",idOrder)
@@ -189,6 +223,79 @@ export class OrderShopComponent implements OnInit {
     });
   }
 
+  // findItemByShopId(): any {
+  //   // @ts-ignore
+  //   let idShop = parseInt(localStorage.getItem("idShop"))
+  //   let DTOItems: DTOItem[] = [];
+  //   for (let i = 0; i < this.DTOItems.length; i++) {
+  //     if (this.DTOItems[i].shop_id == idShop) {
+  //       DTOItems.push(this.DTOItems[i])
+  //     }
+  //   }
+  //   return DTOItems;
+  // }
+  //
+  // createOrder() {
+  //   // @ts-ignore
+  //   let idShop = parseInt(localStorage.getItem("idShop"))
+  //   // @ts-ignore
+  //   let description = document.getElementById('checkout-mess').value
+  //   let order = {
+  //     description: description,
+  //     customer: {
+  //       id: this.currentCustomer.id
+  //     },
+  //     shop_id: idShop
+  //   }
+  //   // @ts-ignore
+  //   return this.orderService.createOrder(order).subscribe(value => {
+  //     let orderDetails: OrderDetail [] = [];
+  //     let dtoItemCheckOut = this.findItemByShopId()
+  //     console.log(dtoItemCheckOut)
+  //     for (let i = 0; i < dtoItemCheckOut.length; i++) {
+  //       // @ts-ignore
+  //       let quantity = dtoItemCheckOut[i].item.quantity
+  //       // @ts-ignore
+  //       let orderDetail = {
+  //         quantity: quantity,
+  //         orders: {
+  //           id: value.id
+  //         },
+  //         product: {
+  //           id: dtoItemCheckOut[i].item.product.id
+  //         }
+  //       }
+  //       orderDetails.push(orderDetail)
+  //     }
+  //     console.log("Trước khi lưu" + orderDetails)
+  //     return this.ordersService.createOrderDetail(orderDetails).subscribe(value1 => {
+  //       console.log(value1)
+  //       // @ts-ignore
+  //       document.getElementById('checkout-mess').value = ""
+  //       for (let i = 0; i < dtoItemCheckOut.length; i++) {
+  //         // @ts-ignore
+  //         this.cartService.deleteItem(dtoItemCheckOut[i].item.id).subscribe(() =>{
+  //           localStorage.removeItem("idShop")
+  //         })
+  //       }
+  //       // this.createSuccess()
+  //       // setTimeout(() => {
+  //       //   window.location.reload()
+  //       // }, 1700)
+  //     })
+  //   })
+  // }
 
-
+  // createSuccess() {
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: 'Đặt hàng thành công',
+  //     showConfirmButton: false,
+  //     timer: 1500
+  //   })
+  // }
 }
+
+
+

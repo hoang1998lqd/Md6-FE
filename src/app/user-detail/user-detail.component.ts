@@ -44,6 +44,8 @@ export class UserDetailComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
+  username?: any
+  roleSize ?: number
 
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
@@ -108,6 +110,7 @@ export class UserDetailComponent implements OnInit {
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
+    this.username = localStorage.getItem("username")
     this.findCurrentCustomer()
     // this.displayItem()
     this.findAllDTOItem()
@@ -115,6 +118,7 @@ export class UserDetailComponent implements OnInit {
     this.findProductByCustomerId()
     this.displayBrandByCategory()
     this.displayItem()
+    this.findRole()
   }
 
   // Hiển thị Brand và Category
@@ -190,7 +194,15 @@ export class UserDetailComponent implements OnInit {
       }
     })
   }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
 
+  }
 
   // Lấy tổng tiền cần thanh toán khi đặt hàng
   getTotalMoney(subtotal: any) {
@@ -274,58 +286,6 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  // Cần thay đổi Id của cửa hàng
-
-  createOrder() {
-    // @ts-ignore
-    let idShop = parseInt(localStorage.getItem("idShop"))
-    // @ts-ignore
-    let description = document.getElementById('checkout-mess').value
-    let order = {
-      description: description,
-      customer: {
-        id: this.currentCustomer.id
-      },
-      shop_id: idShop
-    }
-    // @ts-ignore
-    return this.orderService.createOrder(order).subscribe(value => {
-      let orderDetails: OrderDetail [] = [];
-      let dtoItemCheckOut = this.findItemByShopId()
-      console.log(dtoItemCheckOut)
-      for (let i = 0; i < dtoItemCheckOut.length; i++) {
-        // @ts-ignore
-        let quantity = dtoItemCheckOut[i].item.quantity
-        // @ts-ignore
-        let orderDetail = {
-          quantity: quantity,
-          orders: {
-            id: value.id
-          },
-          product: {
-            id: dtoItemCheckOut[i].item.product.id
-          }
-        }
-        orderDetails.push(orderDetail)
-      }
-      console.log("Trước khi lưu" + orderDetails)
-      return this.orderService.createOrderDetail(orderDetails).subscribe(value1 => {
-        console.log(value1)
-        // @ts-ignore
-        document.getElementById('checkout-mess').value = ""
-        for (let i = 0; i < dtoItemCheckOut.length; i++) {
-          // @ts-ignore
-          this.cartService.deleteItem(dtoItemCheckOut[i].item.id).subscribe(() =>{
-            localStorage.removeItem("idShop")
-          })
-        }
-        this.createSuccess()
-        setTimeout(() => {
-          window.location.reload()
-        }, 1700)
-      })
-    })
-  }
 
   createSuccess() {
     Swal.fire({

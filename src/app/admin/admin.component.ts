@@ -14,6 +14,7 @@ export class AdminComponent implements OnInit {
   myScriptElement4: HTMLScriptElement;
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
+  username?: any
 
   turnover :number = 0
   totalOrder :number = 0;
@@ -64,13 +65,12 @@ export class AdminComponent implements OnInit {
     script3.href = "./assets/admin/css/sb-admin-2.min.css";
     script3.rel = "stylesheet";
     document.body.appendChild(script3);
-    const script4 = document.createElement('body');
-    script4.id = "page-top"
-    document.body.appendChild(script4);
-
-
+    // const script4 = document.createElement('body');
+    // script4.id = "page-top"
+    // document.body.appendChild(script4);
     this.findAllOrderDetailByShopId()
     this.findAllOrderByShopId()
+    this.username = localStorage.getItem("username")
 
   }
 

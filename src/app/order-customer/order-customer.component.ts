@@ -8,7 +8,6 @@ import {CustomerService} from "../service/customer.service";
 // @ts-ignore
 import {OrderDetail} from "../model/OrderDetail";
 import {ProductDTO} from "../model/ProductDTO";
-import {OrderService} from "../service/order.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSort} from "@angular/material/sort";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
@@ -48,14 +47,15 @@ export class OrderCustomerComponent implements OnInit {
 
   listOrderOfShop !: Orders[]
 
-  listOrderDetail : OrderDetail [] = []
-  searchText:any
+  listOrderDetail: OrderDetail [] = []
+  searchText: any
   term: string = ""
-  dataSource!: MatTableDataSource<Orders> ;
-  constructor(private ordersService: OrdersService,
+  dataSource!: MatTableDataSource<Orders>;
 
-              private customerService: CustomerService,
-              public dialog: MatDialog) {
+  constructor(
+    private ordersService: OrdersService,
+    private customerService: CustomerService,
+    public dialog: MatDialog) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/admin/vendor/jquery/jquery.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -134,7 +134,7 @@ export class OrderCustomerComponent implements OnInit {
 
   }
 
-  logOut(){
+  logOut() {
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login-register")
   }
@@ -143,7 +143,7 @@ export class OrderCustomerComponent implements OnInit {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     return this.ordersService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
-       this.dataSource = new MatTableDataSource(value)
+      this.dataSource = new MatTableDataSource(value)
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
 
@@ -174,9 +174,9 @@ export class OrderCustomerComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-          setTimeout(()=>{
+          setTimeout(() => {
             window.location.reload()
-          } ,1700)
+          }, 1700)
         })
 
       }
@@ -185,47 +185,27 @@ export class OrderCustomerComponent implements OnInit {
   }
 
 
-  // Chuyển STATUS_ORDER sang 1 là phần gửi hàng
-  updateStatusOrder(idOrder ?: any){
+  // Chuyển STATUS_ORDER sang 2 là phần gửi hàng
+  updateStatusOrder(idOrder ?: any) {
     this.ordersService.updateStatusOrderCustomer(idOrder).subscribe(value => {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Xác nhận đơn hàng thành công',
+        title: 'Cảm ơn bạn đã mua hàng',
         showConfirmButton: false,
         timer: 1500
       })
-      setTimeout(() =>{
-        window.location.reload()
-      },1700)
+      setTimeout(() => {
+        this.findAllOrderByCustomerId()
+      }, 1700)
     })
 
   }
 
-  // findAllOrderDetailByCustomerId(){
-  //   // @ts-ignore
-  //   let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-  //   return this.ordersService.findAllOrderDetailByCustomerId(idCustomer).subscribe(value => {
-  //     this.listOrderDetail = value
-  //   })
-  // }
-  //
-  //
-  // findAllOrderDetail(idOrder ?: number) {
-  //   let orderDetails : OrderDetail [] = []
-  //   for (let i = 0; i < this.listOrderDetail.length; i++) {
-  //     if (idOrder == this.listOrderDetail[i].orders!.id) {
-  //       orderDetails.push(this.listOrderDetail[i])
-  //     }
-  //   }
-  //   console.log(orderDetails)
-  //   // return orderDetails;
-  // }
-
 
   // Content
   openDialog(idOrder ?: any) {
-    localStorage.setItem("idOrder",idOrder)
+    localStorage.setItem("idOrder", idOrder)
     const dialogRef = this.dialog.open(OrderDetailComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -305,6 +285,4 @@ export class OrderCustomerComponent implements OnInit {
   //   })
   // }
 }
-
-
 

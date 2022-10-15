@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   tableSizes: any = [3, 6, 9, 12];
   // Phân trang
 
+  roleSize ?: number
   products: ProductDTO [] = []
   brands: Brand [] = []
   total: number = 0;
@@ -43,6 +44,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   categoryBrands: CategoryBrand[] = []
   listProduct: ProductDTO [] = []
   idCurrentCustomer : number = 0
+  currentCustomer?: any
+  username?: any
   constructor(private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
@@ -166,10 +169,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-3.5.0.min.js';
     document.body.appendChild(script1);
-
+    this.currentCustomer = localStorage.getItem("currentCustomer")
+    this.username = localStorage.getItem("username")
     this.displayItem()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
+    this.findRole()
   }
 
 
@@ -187,8 +192,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     this.productService.findAllProductNotCustomerId(idCustomer).subscribe(value => {
+      console.log( value)
       this.listProduct = value
     })
+  }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
+
   }
 
   displayItem() {
@@ -212,7 +227,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   addToCart(idProduct?: number) {
-
+    debugger
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {
@@ -387,8 +402,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   logOut(){
     this.customerService.logOutCustomer();
-    // window.location.replace("http://localhost:4200/login-register")
-    window.location.reload()
+    window.location.replace("http://localhost:4200/login")
   }
 
 }

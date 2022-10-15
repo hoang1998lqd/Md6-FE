@@ -71,7 +71,7 @@
                   <button mat-mini-fab color="warn" aria-label="Example icon button with a config icon"
                           style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 1">
                     <mat-icon routerLink="/shopping-cart"
-                              [queryParams]="{id: row.id}" (click)="updateStatusOrder()">done_outline
+                              [queryParams]="{id: row.id}" (click)="updateStatusOrder(row!.id)">done_outline
                     </mat-icon>
                   </button>
                   <button mat-mini-fab color="accent" aria-label="Example icon button with a delete icon"

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule, RoutingComponent} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -22,41 +22,41 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxPaginationModule} from "ngx-pagination";
-import { OrderCustomerComponent } from './order-customer/order-customer.component';
-import { AdminTableComponent } from './admin-table/admin-table.component';
-import { AdminComponent } from './admin/admin.component';
-import { FormCreateProductComponent } from './form-create-product/form-create-product.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {httpInterceptorProviders} from "./helper/jwt-interceptor";
+import { ProductComponent } from './product/product.component';
+import {AdminTableComponent} from "./admin-table/admin-table.component";
+import {AdminComponent} from "./admin/admin.component";
+import {FormCreateProductComponent} from "./form-create-product/form-create-product.component";
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {OrderShopComponent} from "./order-shop/order-shop.component";
 import {MatExpansionModule} from "@angular/material/expansion";
-// @ts-ignore
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 import {OrderModule} from "ngx-order-pipe";
-// @ts-ignore
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {ShopComponent} from "./shop/shop.component";
+import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import { UserDetailComponent } from './user-detail/user-detail.component';
-
+import { OrderCustomerComponent } from './order-customer/order-customer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-
-    OrderCustomerComponent,
-
+    LoginComponent,
+    RoutingComponent,
+    RegisterComponent,
+    ProductComponent,
     ShopComponent,
-
     AdminTableComponent,
     AdminComponent,
     FormCreateProductComponent,
     ShoppingCartComponent,
     AboutUsComponent,
     CheckoutComponent,
-
     OrderShopComponent,
     OrderDetailComponent,
     UserDetailComponent,
@@ -90,9 +90,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     Ng2SearchPipeModule,
 
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
-
-
 export class AppModule { }

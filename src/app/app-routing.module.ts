@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {AdminTableComponent} from "./admin-table/admin-table.component";
 import {AdminComponent} from "./admin/admin.component";
 import {HomeComponent} from "./home/home.component";
@@ -7,6 +7,8 @@ import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import {AboutUsComponent} from "./about-us/about-us.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {OrderShopComponent} from "./order-shop/order-shop.component";
+import {OrderCustomerComponent} from "./order-customer/order-customer.component";
+import * as path from "path";
 
 
 const routes: Routes = [
@@ -17,23 +19,26 @@ const routes: Routes = [
     path: "admin", component: AdminComponent,
   },
   {
-    path:"", component: HomeComponent
+    path: "", component: HomeComponent
   },
   {
-    path:"shopping-cart", component: ShoppingCartComponent
+    path: "shopping-cart", component: ShoppingCartComponent
   },
   {
-    path:"about", component: AboutUsComponent
+    path: "about", component: AboutUsComponent
   },
   {
-    path:"checkout", component: CheckoutComponent
+    path: "checkout", component: CheckoutComponent,
   },
   {
-    path:"order-shop", component: OrderShopComponent
+    path: "order-shop", component: OrderShopComponent
   },
   {
-    path: "order-customer", component: OrderShopComponent
-  },
+    path: "order-customer", component: OrderCustomerComponent,
+    children: [
+      {path: "shopping-cart", component: ShoppingCartComponent}
+    ]
+  }
 
   // {
   //   path:"shop", component: ShopComponent,

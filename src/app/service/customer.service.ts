@@ -57,7 +57,7 @@ export class CustomerService {
     localStorage.removeItem("currentCustomer")
     localStorage.removeItem("username")
     localStorage.removeItem("roles")
-    localStorage.setItem("idCustomer","0")
+    localStorage.removeItem("idCustomer")
     localStorage.removeItem("token")
     // @ts-ignore
     this.currentCustomerSubject.next(null);

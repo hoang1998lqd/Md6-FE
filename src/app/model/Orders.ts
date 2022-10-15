@@ -2,7 +2,7 @@
 import {Customer} from "./Customer";
 
 export interface Orders {
-  id?: number
+  id: number
   date_order?: Date
   date_ship?: Date
   description?: any

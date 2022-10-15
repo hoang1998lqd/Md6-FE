@@ -7,11 +7,14 @@ import {MatTableDataSource} from "@angular/material/table";
 import {CustomerService} from "../service/customer.service";
 // @ts-ignore
 import {OrderDetail} from "../model/OrderDetail";
+import {ProductDTO} from "../model/ProductDTO";
+import {OrderService} from "../service/order.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSort} from "@angular/material/sort";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
 import Swal from "sweetalert2";
 import {Customer} from "../model/Customer";
+import {DTOItem} from "../model/DTOItem";
 
 
 @Component({
@@ -39,13 +42,18 @@ export class OrderCustomerComponent implements OnInit {
   currentCustomer!: Customer;
   // DTOItems: DTOItem [] = []
   displayedColumns: string[] = ['stt', 'dateOrder', 'dateShip', 'description', 'customer', 'status_order', 'status_pay', 'action'];
+
   listOrder !: Orders[]
   orders!: Orders
+
+  listOrderOfShop !: Orders[]
+
   listOrderDetail : OrderDetail [] = []
   searchText:any
   term: string = ""
   dataSource!: MatTableDataSource<Orders> ;
-  constructor(private orderService: OrdersService,
+  constructor(private ordersService: OrdersService,
+
               private customerService: CustomerService,
               public dialog: MatDialog) {
     this.myScriptElement = document.createElement("script")
@@ -92,7 +100,6 @@ export class OrderCustomerComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    // console.log(this.dataSource)
     const script1 = document.createElement('link');
     script1.href = "./assets/admin/vendor/fontawesome-free/css/all.min.css";
     script1.rel = "stylesheet";
@@ -135,7 +142,7 @@ export class OrderCustomerComponent implements OnInit {
   findAllOrderByCustomerId() {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
+    return this.ordersService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
        this.dataSource = new MatTableDataSource(value)
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
@@ -157,11 +164,13 @@ export class OrderCustomerComponent implements OnInit {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        this.orderService.rejectOrder(idOrder).subscribe(() => {
+
+        this.ordersService.rejectOrder(idOrder).subscribe(() => {
           Swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Đã hủy đơn hàng',
+
             showConfirmButton: false,
             timer: 1500
           })
@@ -175,9 +184,10 @@ export class OrderCustomerComponent implements OnInit {
 
   }
 
+
   // Chuyển STATUS_ORDER sang 1 là phần gửi hàng
   updateStatusOrder(idOrder ?: any){
-    this.orderService.updateStatusOrderCustomer(idOrder).subscribe(value => {
+    this.ordersService.updateStatusOrderCustomer(idOrder).subscribe(value => {
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -191,7 +201,6 @@ export class OrderCustomerComponent implements OnInit {
     })
 
   }
-
 
   // findAllOrderDetailByCustomerId(){
   //   // @ts-ignore

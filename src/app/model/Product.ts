@@ -15,6 +15,3 @@ export interface Product {
   category?: Category
   customer?: Customer
 }
-
-
-

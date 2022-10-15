@@ -4,26 +4,32 @@ import {OrdersService} from "../service/orders.service";
 import {Orders} from "../model/Orders";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-
-import Swal from "sweetalert2";
 import {CustomerService} from "../service/customer.service";
+// @ts-ignore
 import {OrderDetail} from "../model/OrderDetail";
-import {ProductService} from "../service/product.service";
-import {MatSort} from "@angular/material/sort";
+import {ProductDTO} from "../model/ProductDTO";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSort} from "@angular/material/sort";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
-
+import Swal from "sweetalert2";
+import {Customer} from "../model/Customer";
+import {DTOItem} from "../model/DTOItem";
 
 
 @Component({
-  selector: 'app-order-shop',
-  templateUrl: './order-shop.component.html',
-  styleUrls: ['./order-shop.component.css'],
+  selector: 'app-order-customer',
+  templateUrl: './order-customer.component.html',
+  styleUrls: ['./order-customer.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
-export class OrderShopComponent implements OnInit {
-
-
+export class OrderCustomerComponent implements OnInit {
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
   myScriptElement2: HTMLScriptElement;
@@ -32,17 +38,24 @@ export class OrderShopComponent implements OnInit {
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
 
-
+  currentCustomer!: Customer;
+  // DTOItems: DTOItem [] = []
   displayedColumns: string[] = ['stt', 'dateOrder', 'dateShip', 'description', 'customer', 'status_order', 'status_pay', 'action'];
+
+  listOrder !: Orders[]
+  orders!: Orders
+
   listOrderOfShop !: Orders[]
-  listOrderDetail : OrderDetail [] = []
-  searchText:any
-  username?: any
+
+  listOrderDetail: OrderDetail [] = []
+  searchText: any
   term: string = ""
-  dataSource!: MatTableDataSource<Orders> ;
-  constructor(private orderService: OrdersService,
-              private customerService: CustomerService,
-              public dialog: MatDialog) {
+  dataSource!: MatTableDataSource<Orders>;
+
+  constructor(
+    private ordersService: OrdersService,
+    private customerService: CustomerService,
+    public dialog: MatDialog) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/admin/vendor/jquery/jquery.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -73,6 +86,7 @@ export class OrderShopComponent implements OnInit {
 
 
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -105,37 +119,41 @@ export class OrderShopComponent implements OnInit {
     script.href = "./assets/admin/vendor/datatables/dataTables.bootstrap4.min.css";
     script.rel = "stylesheet";
     document.body.appendChild(script);
-    // const script4 = document.createElement('body');
-    // script4.id = "page-top"
-    // document.body.appendChild(script4);
+    const script4 = document.createElement('body');
+    script4.id = "page-top"
+    document.body.appendChild(script4);
     const script5 = document.createElement('link');
     script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
     script2.rel = "stylesheet";
     document.body.appendChild(script5);
-    this.findAllOrderByShopId()
-    // this.findAllOrderDetailByShopId()
-    this.username = localStorage.getItem("username")
+
+
+    this.findAllOrderByCustomerId()
+    // this.findAllOrderDetailByCustomerId()
+    // this.findAllOrderDetail()
+
   }
 
-  // Content
-  logOut(){
+  logOut() {
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login-register")
   }
-  findAllOrderByShopId() {
+
+  findAllOrderByCustomerId() {
     // @ts-ignore
-    let idShop = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderByShopId(idShop).subscribe(value => {
-      console.log(value)
-      this.dataSource = new MatTableDataSource<Orders>(value)
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.ordersService.findAllOrderByCustomerId(idCustomer).subscribe(value => {
+      this.dataSource = new MatTableDataSource(value)
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
+
+      console.log(value)
     })
   }
 
   updateStatusExist(idOrder ?: number) {
     Swal.fire({
-      title: 'Bạn có chắc muốn hủy đơn hàng?',
+      title: 'Bạn có chắc chắn muốn hủy đơn hàng?',
       text: "Dữ liệu sẽ không thể khôi phục!",
       icon: 'warning',
       showCancelButton: true,
@@ -146,17 +164,19 @@ export class OrderShopComponent implements OnInit {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        this.orderService.rejectOrder(idOrder).subscribe(() => {
+
+        this.ordersService.rejectOrder(idOrder).subscribe(() => {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Đã từ chối đơn hàng',
+            title: 'Đã hủy đơn hàng',
+
             showConfirmButton: false,
             timer: 1500
           })
-          setTimeout(()=>{
-            this.findAllOrderByShopId()
-          } ,1700)
+          setTimeout(() => {
+            window.location.reload()
+          }, 1700)
         })
 
       }
@@ -164,32 +184,106 @@ export class OrderShopComponent implements OnInit {
 
   }
 
-  // Chuyển STATUS_ORDER sang 1 là phần gửi hàng
-  updateStatusOrderFirst(idOrder ?: any){
-    this.orderService.updateStatusOrder(idOrder).subscribe(value => {
+
+  // Chuyển STATUS_ORDER sang 2 là phần gửi hàng
+  updateStatusOrder(idOrder ?: any) {
+    this.ordersService.updateStatusOrderCustomer(idOrder).subscribe(value => {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Xác nhận đơn hàng thành công',
+        title: 'Cảm ơn bạn đã mua hàng',
         showConfirmButton: false,
         timer: 1500
       })
-      setTimeout(() =>{
-       this.findAllOrderByShopId()
-      },1700)
+      setTimeout(() => {
+        this.findAllOrderByCustomerId()
+      }, 1700)
     })
 
   }
 
+
   // Content
   openDialog(idOrder ?: any) {
-    localStorage.setItem("idOrder",idOrder)
+    localStorage.setItem("idOrder", idOrder)
     const dialogRef = this.dialog.open(OrderDetailComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
+  // findItemByShopId(): any {
+  //   // @ts-ignore
+  //   let idShop = parseInt(localStorage.getItem("idShop"))
+  //   let DTOItems: DTOItem[] = [];
+  //   for (let i = 0; i < this.DTOItems.length; i++) {
+  //     if (this.DTOItems[i].shop_id == idShop) {
+  //       DTOItems.push(this.DTOItems[i])
+  //     }
+  //   }
+  //   return DTOItems;
+  // }
+  //
+  // createOrder() {
+  //   // @ts-ignore
+  //   let idShop = parseInt(localStorage.getItem("idShop"))
+  //   // @ts-ignore
+  //   let description = document.getElementById('checkout-mess').value
+  //   let order = {
+  //     description: description,
+  //     customer: {
+  //       id: this.currentCustomer.id
+  //     },
+  //     shop_id: idShop
+  //   }
+  //   // @ts-ignore
+  //   return this.orderService.createOrder(order).subscribe(value => {
+  //     let orderDetails: OrderDetail [] = [];
+  //     let dtoItemCheckOut = this.findItemByShopId()
+  //     console.log(dtoItemCheckOut)
+  //     for (let i = 0; i < dtoItemCheckOut.length; i++) {
+  //       // @ts-ignore
+  //       let quantity = dtoItemCheckOut[i].item.quantity
+  //       // @ts-ignore
+  //       let orderDetail = {
+  //         quantity: quantity,
+  //         orders: {
+  //           id: value.id
+  //         },
+  //         product: {
+  //           id: dtoItemCheckOut[i].item.product.id
+  //         }
+  //       }
+  //       orderDetails.push(orderDetail)
+  //     }
+  //     console.log("Trước khi lưu" + orderDetails)
+  //     return this.ordersService.createOrderDetail(orderDetails).subscribe(value1 => {
+  //       console.log(value1)
+  //       // @ts-ignore
+  //       document.getElementById('checkout-mess').value = ""
+  //       for (let i = 0; i < dtoItemCheckOut.length; i++) {
+  //         // @ts-ignore
+  //         this.cartService.deleteItem(dtoItemCheckOut[i].item.id).subscribe(() =>{
+  //           localStorage.removeItem("idShop")
+  //         })
+  //       }
+  //       // this.createSuccess()
+  //       // setTimeout(() => {
+  //       //   window.location.reload()
+  //       // }, 1700)
+  //     })
+  //   })
+  // }
 
-
+  // createSuccess() {
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: 'Đặt hàng thành công',
+  //     showConfirmButton: false,
+  //     timer: 1500
+  //   })
+  // }
 }
+
+

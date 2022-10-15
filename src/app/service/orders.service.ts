@@ -43,6 +43,15 @@ export class OrdersService {
     return this.httpclient.get<OrderDetail[]>("http://localhost:8081/api/orders/order-detail/" + idOrder)
   }
 
+  findAllOrderByCustomerId(idCustomer: number): Observable<Orders[]>{
+    return this.httpclient.get<Orders[]>("http://localhost:8081/api/orders/order-customer/"+idCustomer)
+  }
+
+  updateStatusOrderCustomer(idOrder ?: any){
+    // @ts-ignore
+    return this.httpclient.put("http://localhost:8081/api/orders/order-customer/" +idOrder)
+  }
+
 
 
 }

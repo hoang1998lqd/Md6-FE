@@ -27,10 +27,7 @@ export class ProductComponent implements OnInit {
   categoryBrands: CategoryBrand[] = []
   total: number = 0;
   subtotal: number = 0;
-  discountItem: number = 0;
-  voucherItem: number = 0;
-  DTOItems: DTOItem [] = []
-  idCurrentCustomer : number = 0
+
   listProduct: ProductDTO [] = []
   username?: any
 
@@ -53,7 +50,8 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private categoryBrandService: CategoryBrandService,
     private orderService: OrdersService,
-    private router: Router) {
+    private router: ActivatedRoute,
+  ) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -110,13 +108,14 @@ export class ProductComponent implements OnInit {
     document.body.appendChild(script1);
     // @ts-ignore
     this.idProduct = this.router.snapshot.queryParamMap.get("id")
-    // console.log(this.idProduct)
+    console.log(this.idProduct)
     // @ts-ignore
     this.idCustomer = localStorage.getItem("idCustomer")
     this.productService.detailProduct(this.idCustomer, this.idProduct).subscribe(value => {
       this.DTOProduct = value
       // console.log(this.DTOProduct)
     })
+    this.username = localStorage.getItem("username")
     this.displayBrandByCategory()
     this.findRole()
   }
@@ -136,7 +135,6 @@ export class ProductComponent implements OnInit {
       console.log(value)
     })
   }
-
 
   findAllProductByCategoryIdAndBrandId(idCategory?: number, idBrand?: number) {
     // @ts-ignore

@@ -39,6 +39,7 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {ShopComponent} from "./shop/shop.component";
 import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { OrderCustomerComponent } from './order-customer/order-customer.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     OrderShopComponent,
     OrderDetailComponent,
     UserDetailComponent,
+    OrderCustomerComponent,
 
   ],
   imports: [

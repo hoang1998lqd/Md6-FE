@@ -100,6 +100,11 @@ const routes: Routes = [
       }
     ]
   },
+
+ {
+    path:"user-detail", component: UserDetailComponent
+  },
+
   {
     path: "user-detail", component: UserDetailComponent,
     children:[

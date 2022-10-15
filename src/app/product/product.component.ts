@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../service/product.service";
 import {CustomerService} from "../service/customer.service";
 import {ProductDTO} from "../model/ProductDTO";
+import {CartService} from "../service/cart.service";
+import {CategoryBrandService} from "../service/category-brand.service";
+import {OrdersService} from "../service/orders.service";
+import {Customer} from "../model/Customer";
+import {Item} from "../model/Item";
+import {CategoryBrand} from "../model/CategoryBrand";
+import {DTOItem} from "../model/DTOItem";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-product',
@@ -13,6 +21,18 @@ export class ProductComponent implements OnInit {
   idProduct?: number
   idCustomer?: number
   DTOProduct!: ProductDTO
+  roleSize ?: number
+  currentCustomer!: Customer;
+  items: Item [] = [];
+  categoryBrands: CategoryBrand[] = []
+  total: number = 0;
+  subtotal: number = 0;
+  discountItem: number = 0;
+  voucherItem: number = 0;
+  DTOItems: DTOItem [] = []
+  idCurrentCustomer : number = 0
+  listProduct: ProductDTO [] = []
+  username?: any
 
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
@@ -27,9 +47,13 @@ export class ProductComponent implements OnInit {
   myScriptElement10: HTMLScriptElement;
   myScriptElement11: HTMLScriptElement;
 
-  constructor(private router: ActivatedRoute,
-              private productService: ProductService,
-              private customerService: CustomerService) {
+  constructor(
+    private customerService: CustomerService,
+    private productService: ProductService,
+    private cartService: CartService,
+    private categoryBrandService: CategoryBrandService,
+    private orderService: OrdersService,
+    private router: Router) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -93,9 +117,83 @@ export class ProductComponent implements OnInit {
       this.DTOProduct = value
       // console.log(this.DTOProduct)
     })
+    this.displayBrandByCategory()
+    this.findRole()
+  }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
+
+  }
+  // Hiển thị Brand và Category
+  displayBrandByCategory() {
+    return this.categoryBrandService.findAllCategoryAndBrand().subscribe(value => {
+      this.categoryBrands = value
+      console.log(value)
+    })
   }
 
 
+  findAllProductByCategoryIdAndBrandId(idCategory?: number, idBrand?: number) {
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.productService.findAllProductByCategoryIdAndBrandId(idCustomer, idCategory, idBrand)
+      .subscribe(value => {
+        this.listProduct = value
+      })
+  }
+
+  findProductByCategoryId(idCategory?: number) {
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.productService.findAllProductByCategoryId(idCategory, idCustomer).subscribe(value => {
+      this.listProduct = value;
+      console.log(value)
+    })
+  }
+
+  deleteItem(idItem?: number) {
+    Swal.fire({
+      title: 'Xóa sản phẩm',
+      text: "Xóa sản phẩm khỏi giỏ hàng",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đồng ý!',
+      cancelButtonText: 'Hủy',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cartService.deleteItem(idItem).subscribe(value => {
+
+        }, error => {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Xóa thất bại',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Xóa sản phẩm thành công',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      this.ngOnInit()
+      // @ts-ignore
+      document.getElementById('cart').style.display = "none"
+
+    })
+
+  }
   changePrice(money?: number): any {
     const formatter = new Intl.NumberFormat('it-IT', {
       style: 'currency',
@@ -105,8 +203,23 @@ export class ProductComponent implements OnInit {
       return formatter.format(money);
     }
   }
+  findImageURLFirst(idProduct: any): any {
+    let imageURL: any;
+    let flag = false;
+    if (idProduct != null) {
+      for (let i = 0; i < this.listProduct.length; i++) {
+        // @ts-ignore
+        if (this.listProduct[i].product.id == idProduct) {
+          flag = true
+          // @ts-ignore
+          imageURL = this.listProduct[i].imageURLS[0]
+          return imageURL;
+        }
+      }
+    }
+  }
 
-  logOut(){
+  logOut() {
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login")
   }

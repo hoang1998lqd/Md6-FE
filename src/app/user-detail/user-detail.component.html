@@ -149,12 +149,8 @@
                 </li>
                 <li><a href="shop.html">Mua Sắm</a>
                 </li>
-                <li><a routerLink="/admin">Quản lý cửa hàng</a>
-                  <!-- Home Version Dropdown Start -->
-<!--                  <ul class="ht-dropdown dropdown-style-two">-->
-<!--                    <li><a href="single-blog.html">blog details</a></li>-->
-<!--                  </ul>-->
-                  <!-- Home Version Dropdown End -->
+                <li *ngIf="roleSize != 1">
+                  <a routerLink="admin" >Quản lý cửa hàng</a>
                 </li>
 <!--                <li><a href="#">Quản lý cửa hàng</a>-->
 <!--                <li><a href="about.html">Giới thiệu</a></li>-->
@@ -293,13 +289,13 @@
           <div class="your-order">
             <h2 style="margin-left: 30px"><strong style="margin-left: 180px">AVATAR</strong></h2>
             <div class="your-order-table table-responsive">
-              <img width="100%" height="100%" src="https://znews-photo.zingcdn.me/w660/Uploaded/qhj_yvobvhfwbv/2018_07_18/Nguyen_Huy_Binh1.jpg" alt="">
+              <img width="100%" height="100%" [src]="currentCustomer!.image" alt="">
             </div>
             <div class="payment-method">
             </div>
             <div class="buttons-cart" style="margin-top: 15px; margin-left: 315px">
 
-              <a style="margin-left: 10px" href="#" (click)="createOrder()">Lưu thay đổi</a>
+              <a style="margin-left: 10px" href="#" >Lưu thay đổi</a>
 
             </div>
           </div>

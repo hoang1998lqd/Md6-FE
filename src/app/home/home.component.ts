@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   tableSizes: any = [3, 6, 9, 12];
   // Phân trang
 
+  roleSize ?: number
   products: ProductDTO [] = []
   brands: Brand [] = []
   total: number = 0;
@@ -173,6 +174,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.displayItem()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
+    this.findRole()
   }
 
 
@@ -190,8 +192,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     this.productService.findAllProductNotCustomerId(idCustomer).subscribe(value => {
+      console.log( value)
       this.listProduct = value
     })
+  }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
+
   }
 
   displayItem() {

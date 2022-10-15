@@ -275,7 +275,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
       name: this.voucherForm.value.name,
       discount: this.voucherForm.value.discount,
       quantity: this.voucherForm.value.quantity,
-      customer: { id : 5
+      customer: { id : 1
       }
     }
     this.voucherService.createVoucher(voucher).subscribe(value => {
@@ -305,7 +305,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
       discount: this.voucherForm.value.discount,
       quantity: this.voucherForm.value.quantity,
       customer: {
-        id: 5
+        id: 1
       }
     }
     Swal.fire({

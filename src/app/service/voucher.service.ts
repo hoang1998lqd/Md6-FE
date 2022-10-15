@@ -21,7 +21,7 @@ export class VoucherService {
   }
 
   updateVoucher(voucher?: Voucher): Observable<Voucher> {
-    return this.httpClient.put<Voucher>("http://localhost:8081/api/voucher/update-voucher", voucher)
+    return this.httpClient.put<Voucher>("http://localhost:8081/api/voucher", voucher)
   }
 
   deleteVoucher(id?: any): Observable<Voucher> {

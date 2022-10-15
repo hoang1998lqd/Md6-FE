@@ -118,8 +118,8 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     script4.id = "page-top"
     document.body.appendChild(script4);
     const script5 = document.createElement('link');
-    script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
-    script2.rel = "stylesheet";
+    // script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
+    // script2.rel = "stylesheet";
     document.body.appendChild(script5);
     this.displayProducts()
     this.displayBrands()
@@ -296,11 +296,11 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
     // @ts-ignore
     document.getElementById("rest").click()
   }
-  updateVoucher(idt?: number) {
+  updateVoucher() {
     // @ts-ignore
     let id = parseInt(localStorage.getItem("idCustomer"))
     let voucher = {
-      id: idt,
+      id: this.voucherForm.value.id,
       name: this.voucherForm.value.name,
       discount: this.voucherForm.value.discount,
       quantity: this.voucherForm.value.quantity,
@@ -400,5 +400,11 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
   //   document.getElementById("createVoucher").style.display = "none"
   // }
 
-
+  // updateForm(id?: number) {
+  //   this.idt = id;
+  //   // @ts-ignore
+  //   this.voucherService.findAllByStore_Id(this.idt).subscribe(value => {
+  //     this.setUpFormUpdate(value)
+  //   })
+  // }
 }

@@ -38,7 +38,7 @@ export class ShoppingCartComponent implements OnInit {
   myScriptElement10: HTMLScriptElement;
   myScriptElement11: HTMLScriptElement;
   myScriptElement12: HTMLScriptElement;
-
+  currentCustomer?: any
   items: Item [] = []
   discountItem: number = 0;
   voucherItem: number = 0;
@@ -56,6 +56,8 @@ export class ShoppingCartComponent implements OnInit {
   subtasks = {name: 'Warn', completed: false, color: 'warn'}
   categoryBrands: CategoryBrand[] = []
   username?: any
+  roleSize ?: number
+
   constructor(private productService: ProductService,
               private cartService: CartService,
               private customerService: CustomerService,
@@ -117,6 +119,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentCustomer = localStorage.getItem("currentCustomer")
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
@@ -127,6 +130,7 @@ export class ShoppingCartComponent implements OnInit {
     this.findShopInCart()
     this.findAllDTOItem()
     this.displayBrandByCategory()
+    this.findRole()
   }
 
   ngAfterContentChecked() {
@@ -298,7 +302,15 @@ export class ShoppingCartComponent implements OnInit {
     })
   }
 
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
 
+  }
   // Cập nhật số lượng mua hàng
   updateQuantityItem() {
     // @ts-ignore

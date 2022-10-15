@@ -45,6 +45,7 @@ export class UserDetailComponent implements OnInit {
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
   username?: any
+  roleSize ?: number
 
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
@@ -117,6 +118,7 @@ export class UserDetailComponent implements OnInit {
     this.findProductByCustomerId()
     this.displayBrandByCategory()
     this.displayItem()
+    this.findRole()
   }
 
   // Hiển thị Brand và Category
@@ -192,7 +194,15 @@ export class UserDetailComponent implements OnInit {
       }
     })
   }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
 
+  }
 
   // Lấy tổng tiền cần thanh toán khi đặt hàng
   getTotalMoney(subtotal: any) {

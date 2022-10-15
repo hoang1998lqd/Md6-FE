@@ -116,11 +116,11 @@ export class RegisterComponent implements OnInit {
       password: this.customerForm.value.password,
       phoneNumber: this.customerForm.value.phoneNumber,
       address: this.customerForm.value.address,
-      image: this.customerForm.value.image,
+      image: "https://znews-photo.zingcdn.me/w660/Uploaded/qhj_yvobvhfwbv/2018_07_18/Nguyen_Huy_Binh1.jpg",
       status: 1,
       role:[
         {
-          id: 1
+          id: 3
         }
       ]
     }

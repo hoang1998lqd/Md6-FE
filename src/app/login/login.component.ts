@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   role!: Role
   loginForm!: FormGroup
   currentCustomer?: any
+  idCustomer ?: number
+  sizeRole : any
 
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
@@ -90,7 +92,6 @@ export class LoginComponent implements OnInit {
       const script1 = document.createElement('script');
       script1.src = './assets/js/vendor/modernizr-3.5.0.min.js';
       document.body.appendChild(script1);
-
       this.loginForm = new FormGroup({
         usename: new FormControl("", Validators.required),
         password: new FormControl("", Validators.required)
@@ -98,10 +99,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
   loginCustomer(){
     console.log(this.loginForm.value.usename)
     console.log(this.loginForm.value.password)
-
     this.customerService.loginCustomer(this.loginForm.value.usename, this.loginForm.value.password)
       .pipe(first())
       .subscribe(value => {
@@ -120,6 +121,7 @@ export class LoginComponent implements OnInit {
         this.loginFail()
       })
   }
+
   directCustomer(roles?: string){
     if (roles == "ADMIN"){
       this.router.navigate(['admin'])

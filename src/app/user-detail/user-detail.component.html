@@ -149,12 +149,8 @@
                 </li>
                 <li><a href="shop.html">Mua Sắm</a>
                 </li>
-                <li><a routerLink="/admin">Quản lý cửa hàng</a>
-                  <!-- Home Version Dropdown Start -->
-<!--                  <ul class="ht-dropdown dropdown-style-two">-->
-<!--                    <li><a href="single-blog.html">blog details</a></li>-->
-<!--                  </ul>-->
-                  <!-- Home Version Dropdown End -->
+                <li *ngIf="roleSize != 1">
+                  <a routerLink="admin" >Quản lý cửa hàng</a>
                 </li>
 <!--                <li><a href="#">Quản lý cửa hàng</a>-->
 <!--                <li><a href="about.html">Giới thiệu</a></li>-->

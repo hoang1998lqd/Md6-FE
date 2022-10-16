@@ -4,6 +4,7 @@ import {Orders} from "../model/Orders";
 import {Observable} from "rxjs";
 import {OrderDetail} from "../model/OrderDetail";
 import {Item} from "../model/Item";
+import {DTOOrder} from "../model/DTOOrder";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,11 @@ export class OrdersService {
   updateStatusOrder(idOrder ?: any){
     // @ts-ignore
     return this.httpclient.put("http://localhost:8081/api/orders/update-quantity/" +idOrder)
+
+  } // Update NGƯỜI DÙNG NHẬN ĐƯỢC HÀNG
+  updateStatusShipDone(idOrder ?: any){
+    // @ts-ignore
+    return this.httpclient.put("http://localhost:8081/api/orders/order-customer/" +idOrder)
   }
   //Tìm kiếm thông tin chi tiết đơn hàng của NGƯỜI BÁN HÀNG đó
 
@@ -50,6 +56,14 @@ export class OrdersService {
   updateStatusOrderCustomer(idOrder ?: any){
     // @ts-ignore
     return this.httpclient.put("http://localhost:8081/api/orders/order-customer/" +idOrder)
+  }
+
+  findAllDTOOrderByShopId(idShop ?: number):Observable<DTOOrder[]>{
+    return  this.httpclient.get<DTOOrder[]>("http://localhost:8081/api/orders/dtoOrder/" + idShop)
+  }
+
+  findAllDTOOrderByCustomerId(idShop ?: number):Observable<DTOOrder[]>{
+    return  this.httpclient.get<DTOOrder[]>("http://localhost:8081/api/orders/order-customer/" + idShop)
   }
 
 

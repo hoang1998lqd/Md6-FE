@@ -6,6 +6,7 @@ import {Category} from "../model/Category";
 import {Brand} from "../model/Brand";
 import {ImageURL} from "../model/ImageURL";
 import {ProductDTO} from "../model/ProductDTO";
+import {DTOProductSold} from "../model/DTOProductSold";
 
 
 @Injectable({
@@ -85,6 +86,11 @@ export class ProductService {
 
   findAllDTOProductByOrderId(idOrder ?: number):Observable<ProductDTO[]>{
     return  this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/orders/" + idOrder)
+  }
+
+  /// Tìm số lượng đã bán ra của từng sản phẩm
+  findAllSoldByProductId():Observable<DTOProductSold[]>{
+    return this.httpClient.get<DTOProductSold[]>("http://localhost:8081/api/products/product-sold")
   }
 
 }

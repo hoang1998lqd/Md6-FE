@@ -66,6 +66,9 @@ const routes: Routes = [
     path:"shopping-cart", component: ShoppingCartComponent,
     children:[
       {
+        path: "order-customer", component: OrderCustomerComponent
+      },
+      {
         path: "user-detail", component: UserDetailComponent
       },
       {
@@ -82,6 +85,9 @@ const routes: Routes = [
   {
     path:"checkout", component: CheckoutComponent,
     children:[
+      {
+        path: "order-customer", component: OrderCustomerComponent
+      },
       {
         path: "user-detail", component: UserDetailComponent
       },
@@ -106,12 +112,16 @@ const routes: Routes = [
   },
 
  {
-    path:"user-detail", component: UserDetailComponent
+
+    path:"user-detail", component: UserDetailComponent,
   },
 
   {
     path: "user-detail", component: UserDetailComponent,
     children:[
+      {
+        path: "order-customer", component: OrderCustomerComponent
+      },
       {
         path: "admin", component: AdminComponent
       },

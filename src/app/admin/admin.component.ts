@@ -131,7 +131,7 @@ export class AdminComponent implements OnInit {
       this.totalOrder = value.length
       let totalShip : number = 0
       for (let i = 0; i < value.length; i++) {
-        if (value[i].status_order == 1){
+        if (value[i].status_order == 1 || value[i].status_order == 2){
           totalShip ++
         }
       }

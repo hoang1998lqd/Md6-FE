@@ -246,16 +246,17 @@
                     <!-- Customer Column -->
                     <ng-container matColumnDef="customer">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Người đặt hàng</th>
-                      <td mat-cell *matCellDef="let row"> {{row.customer!.name}} </td>
+                      <td mat-cell *matCellDef="let row"> {{row.customer}} </td>
                     </ng-container>
 
                     <!-- StatusOrder Column -->
                     <ng-container matColumnDef="status_order">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái đơn hàng</th>
                       <td mat-cell *matCellDef="let row">
-                        <span *ngIf="row.status_order == 0">Chờ xác nhận</span>
-                        <span *ngIf="row.status_order == 1">Đã gửi hàng</span>
-                        <span *ngIf="row.status_order == 2">Đã nhận được hàng</span>
+<!--                        <span *ngIf="row.status_order == 0">Chờ xác nhận</span>-->
+                        <span>{{row.status_order}}</span>
+<!--                        <span *ngIf="row.status_order == 1">Đã gửi hàng</span>-->
+<!--                        <span *ngIf="row.status_order == 2">Đã nhận được hàng</span>-->
                       </td>
 
                     </ng-container>
@@ -264,8 +265,9 @@
                     <ng-container matColumnDef="status_pay">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái thanh toán</th>
                       <td mat-cell *matCellDef="let row">
-                        <span *ngIf="row.status_pay == 0">Chưa thanh toán</span>
-                        <span *ngIf="row.status_pay == 1">Đã thanh toán</span>
+<!--                        <span *ngIf="row.status_pay == 0">Chưa thanh toán</span>-->
+<!--                        <span *ngIf="row.status_pay == 1">Đã thanh toán</span>-->
+                        <span>{{row.status_pay}}</span>
                       </td>
                     </ng-container>
 
@@ -274,25 +276,25 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Hành động</th>
                       <td mat-cell *matCellDef="let row">
                         <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon"
-                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 0">
+                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == status_order">
                           <mat-icon (click)="updateStatusOrderFirst(row.id)">done_outline</mat-icon>
                         </button>
                         <button mat-mini-fab color="accent" aria-label="Example icon button with a delete icon"
-                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 0">
+                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == status_order">
                           <mat-icon (click)="updateStatusExist(row.id)">delete_outline</mat-icon>
                         </button>
                         <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == 0"
+                                style="cursor: pointer; margin-left: 10px" *ngIf="row.status_order == status_order"
                                 (click)="openDialog(row.id)">
                           <mat-icon>view_agenda</mat-icon>
                         </button>
                         <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                                style="cursor: pointer; margin-left: 60px" *ngIf="row.status_order == 1"
+                                style="cursor: pointer; margin-left: 60px" *ngIf="row.status_order == status_order_1"
                                 (click)="openDialog(row.id)">
                           <mat-icon>view_agenda</mat-icon>
                         </button>
                         <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                                style="cursor: pointer; margin-left: 60px" *ngIf="row.status_order == 2"
+                                style="cursor: pointer; margin-left: 60px" *ngIf="row.status_order == status_order_2"
                                 (click)="openDialog(row.id)">
                           <mat-icon>view_agenda</mat-icon>
                         </button>

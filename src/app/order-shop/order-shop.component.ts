@@ -12,6 +12,7 @@ import {ProductService} from "../service/product.service";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
+import {DTOOrder} from "../model/DTOOrder";
 
 
 
@@ -32,14 +33,15 @@ export class OrderShopComponent implements OnInit {
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
 
+  status_order = "Chờ xác nhận"
+  status_order_1 = "Đã gửi hàng"
+  status_order_2 = "Đã nhận được hàng"
 
   displayedColumns: string[] = ['stt', 'dateOrder', 'dateShip', 'description', 'customer', 'status_order', 'status_pay', 'action'];
-  listOrderOfShop !: Orders[]
-  listOrderDetail : OrderDetail [] = []
-  searchText:any
   username?: any
   term: string = ""
-  dataSource!: MatTableDataSource<Orders> ;
+  dataSource!: MatTableDataSource<DTOOrder> ;
+  // dataSource!: MatTableDataSource<Orders> ;
   constructor(private orderService: OrdersService,
               private customerService: CustomerService,
               public dialog: MatDialog) {
@@ -112,9 +114,10 @@ export class OrderShopComponent implements OnInit {
     script2.href = "https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossorigin=\"anonymous";
     script2.rel = "stylesheet";
     document.body.appendChild(script5);
-    this.findAllOrderByShopId()
+    // this.findAllOrderByShopId()
     // this.findAllOrderDetailByShopId()
     this.username = localStorage.getItem("username")
+    this.findAllDTOOrderByShopId()
   }
 
   // Content
@@ -122,12 +125,23 @@ export class OrderShopComponent implements OnInit {
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login-register")
   }
-  findAllOrderByShopId() {
+  // findAllOrderByShopId() {
+  //   // @ts-ignore
+  //   let idShop = parseInt(localStorage.getItem("idCustomer"))
+  //   return this.orderService.findAllOrderByShopId(idShop).subscribe(value => {
+  //     console.log(value)
+  //     this.dataSource = new MatTableDataSource<Orders>(value)
+  //     this.dataSource.paginator = this.paginator
+  //     this.dataSource.sort = this.sort
+  //   })
+  // }
+
+  findAllDTOOrderByShopId(){
     // @ts-ignore
     let idShop = parseInt(localStorage.getItem("idCustomer"))
-    return this.orderService.findAllOrderByShopId(idShop).subscribe(value => {
+    return this.orderService.findAllDTOOrderByShopId(idShop).subscribe(value => {
       console.log(value)
-      this.dataSource = new MatTableDataSource<Orders>(value)
+      this.dataSource = new MatTableDataSource<DTOOrder>(value)
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
     })
@@ -155,7 +169,8 @@ export class OrderShopComponent implements OnInit {
             timer: 1500
           })
           setTimeout(()=>{
-            this.findAllOrderByShopId()
+            // this.findAllOrderByShopId()
+            this.findAllDTOOrderByShopId()
           } ,1700)
         })
 
@@ -175,7 +190,8 @@ export class OrderShopComponent implements OnInit {
         timer: 1500
       })
       setTimeout(() =>{
-       this.findAllOrderByShopId()
+       // this.findAllOrderByShopId()
+       this.findAllDTOOrderByShopId()
       },1700)
     })
 

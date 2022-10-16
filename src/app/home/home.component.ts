@@ -8,6 +8,7 @@ import {CartService} from "../service/cart.service";
 import {CategoryBrandService} from "../service/category-brand.service";
 import {CustomerService} from "../service/customer.service";
 import Swal from "sweetalert2";
+import {DTOProductSold} from "../model/DTOProductSold";
 
 @Component({
   selector: 'app-home',
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   idCurrentCustomer : number = 0
   currentCustomer?: any
   username?: any
+  listProductSold : DTOProductSold[] = []
   constructor(private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
@@ -175,8 +177,27 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.findProductByCustomerId()
     this.displayBrandByCategory()
     this.findRole()
+    this.findAllSoldByProductId()
   }
 
+  // Tìm số lượng đã bản ra của từng sản phẩm
+  findAllSoldByProductId(){
+    return this.productService.findAllSoldByProductId().subscribe(value => {
+      console.log(value)
+      this.listProductSold = value
+    })
+  }
+
+  findSoldByProductId(idProduct ?: number): any{
+    let sold = 0;
+    for (let i = 0; i < this.listProductSold.length; i++) {
+      if (idProduct == this.listProductSold[i].id){
+        // @ts-ignore
+        sold = this.listProductSold[i].sold
+      }
+    }
+    return sold
+  }
 
   // Hiển thị Brand và Category
   displayBrandByCategory() {
@@ -227,7 +248,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   addToCart(idProduct?: number) {
-    debugger
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {

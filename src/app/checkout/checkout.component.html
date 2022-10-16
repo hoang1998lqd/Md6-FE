@@ -289,16 +289,18 @@
           <div class="coupon-accordion">
             <!-- ACCORDION START -->
             <h3 style="cursor: pointer" routerLink="/shopping-cart">Quay lại giỏ hàng</h3>
-            <div id="checkout_coupon" class="coupon-checkout-content">
-              <div class="coupon-info">
-                <form action="#">
-                  <p class="checkout-coupon">
-                    <input type="text" class="code" placeholder="Coupon code" />
-                    <input type="submit" value="Áp mã giảm giá" />
-                  </p>
-                </form>
-              </div>
-            </div>
+            <!-- ACCORDION START -->
+<!--            <h3>Bạn đã có mã giảm giá? <span id="showcoupon">Click và đây để nhập !!!</span></h3>-->
+<!--            <div id="checkout_coupon" class="coupon-checkout-content">-->
+<!--              <div class="coupon-info">-->
+<!--                <form action="#">-->
+<!--                  <p class="checkout-coupon">-->
+<!--                    <input type="text" class="code" placeholder="Coupon code" />-->
+<!--                    <input type="submit" value="Apply Coupon" />-->
+<!--                  </p>-->
+<!--                </form>-->
+<!--              </div>-->
+<!--            </div>-->
             <!-- ACCORDION END -->
           </div>
         </div>
@@ -342,7 +344,7 @@
             <div class="different-address" style="margin-top: 15px">
               <div class="ship-different-title">
                 <h3>
-                  <label>Gửi tới địa chỉ khác</label>
+                  <label>Lời nhắn</label>
                   <input id="ship-box" type="checkbox" />
                 </h3>
               </div>
@@ -354,6 +356,21 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="coupon-accordion" style="margin-top: 15px">
+              <!-- ACCORDION START -->
+              <h3>Bạn đã có mã giảm giá? <span id="showcoupon">Click và đây để nhập !!!</span></h3>
+              <div id="checkout_coupon" class="coupon-checkout-content">
+                <div class="coupon-info">
+                  <form action="#">
+                    <p class="checkout-coupon">
+                      <input type="text" class="code" placeholder="Mã giảm giá" />
+                      <input type="submit" value="Áp Dụng" />
+                    </p>
+                  </form>
+                </div>
+              </div>
+              <!-- ACCORDION END -->
             </div>
           </div>
         </div>

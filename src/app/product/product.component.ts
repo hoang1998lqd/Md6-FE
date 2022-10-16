@@ -44,6 +44,7 @@ export class ProductComponent implements OnInit {
   curDate?: any
   time?: string
 
+
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
   myScriptElement2: HTMLScriptElement;
@@ -213,7 +214,6 @@ export class ProductComponent implements OnInit {
       console.log(value)
     })
   }
-
 
   findAllProductByCategoryIdAndBrandId(idCategory?: number, idBrand?: number) {
     // @ts-ignore

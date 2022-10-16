@@ -11,6 +11,7 @@ import {AboutUsComponent} from "./about-us/about-us.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {OrderShopComponent} from "./order-shop/order-shop.component";
 import {UserDetailComponent} from "./user-detail/user-detail.component";
+import {OrderCustomerComponent} from "./order-customer/order-customer.component";
 
 
 const routes: Routes = [
@@ -35,6 +36,9 @@ const routes: Routes = [
   },
   {
     path: "product", component: ProductComponent
+  },
+  {
+    path: "order-customer", component: OrderCustomerComponent
   },
   {
     path: "admin-table", component: AdminTableComponent,

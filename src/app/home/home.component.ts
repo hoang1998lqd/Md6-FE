@@ -227,6 +227,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   addToCart(idProduct?: number) {
+    debugger
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {

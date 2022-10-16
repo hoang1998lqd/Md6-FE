@@ -1,26 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CustomerService} from "../service/customer.service";
 import {Customer} from "../model/Customer";
+import {MatTableDataSource} from "@angular/material/table";
+import {ProductDTO} from "../model/ProductDTO";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import Swal from "sweetalert2";
+import {finalize} from "rxjs";
 import {Item} from "../model/Item";
 import {CategoryBrand} from "../model/CategoryBrand";
 import {DTOItem} from "../model/DTOItem";
-import {ProductDTO} from "../model/ProductDTO";
-import {CustomerService} from "../service/customer.service";
+import {DTOOrder} from "../model/DTOOrder";
+import {OrderDetailComponent} from "../order-detail/order-detail.component";
+import {OrderDetail} from "../model/OrderDetail";
+import {OrdersService} from "../service/orders.service";
+import {MatDialog} from "@angular/material/dialog";
 import {ProductService} from "../service/product.service";
 import {CartService} from "../service/cart.service";
 import {CategoryBrandService} from "../service/category-brand.service";
-import {OrdersService} from "../service/orders.service";
-import Swal from "sweetalert2";
-import {OrderDetail} from "../model/OrderDetail";
-import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {finalize} from "rxjs";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  selector: 'app-admin-manage',
+  templateUrl: './admin-manage.component.html',
+  styleUrls: ['./admin-manage.component.css']
 })
-export class UserDetailComponent implements OnInit {
+export class AdminManageComponent implements OnInit {
+
 
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
@@ -36,8 +42,8 @@ export class UserDetailComponent implements OnInit {
   myScriptElement11: HTMLScriptElement;
   myScriptElement12: HTMLScriptElement;
 
-  check?: boolean = true;
-  p2p?: boolean = true;
+
+  roleSize ?: number
   currentCustomer!: Customer;
   items: Item [] = [];
   categoryBrands: CategoryBrand[] = []
@@ -48,19 +54,18 @@ export class UserDetailComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
-  username?: any
-  roleSize ?: number
-  selectedImages: any[] = []
-  srcImg : any
-  customerForm!: FormGroup;
-  oldPassStatus :any
 
-  constructor(private customerService: CustomerService, private productService: ProductService,
+
+  dataSource !: MatTableDataSource<Customer>
+  username?: any
+  displayedColumns: string[] = ['stt', 'name', 'email', 'phone', 'address', 'image', 'action'];
+  constructor(private customerService: CustomerService,
+              private orderService: OrdersService,
+              public dialog: MatDialog,
+              private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
-              private storage : AngularFireStorage,
-              private formGroup: FormBuilder,
-              private orderService: OrdersService) {
+              private router: Router)  {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -116,30 +121,132 @@ export class UserDetailComponent implements OnInit {
     document.body.appendChild(this.myScriptElement11)
   }
 
+
   ngOnInit(): void {
+    this.username = localStorage.getItem("username")
+    this.findAllCustomerByStatus();
+    this.  findCurrentCustomer();
+    this.findRole();
+
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
-    this.username = localStorage.getItem("username")
-    this.customerForm = this.formGroup.group({
-      id: new FormControl(""),
-      name: new FormControl("", Validators.compose([Validators.required, Validators.minLength(8)])),
-      emailAddress: new FormControl("", Validators.compose([Validators.required, Validators.email])),
-      password: new FormControl("", Validators.compose([Validators.required, Validators.pattern("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")])),
-      phoneNumber: new FormControl("", Validators.compose([Validators.required, Validators.pattern("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$")])),
-      address: new FormControl("", Validators.compose([Validators.required, Validators.minLength(5)])),
-      image: new FormControl(""),
-      status: new FormControl(""),
-      role: new FormControl(""),
-    });
     this.findCurrentCustomer()
-
+    this.username = localStorage.getItem("username")
+    // this.displayItem()
     this.findAllDTOItem()
     this.findItemByShopId()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
     this.displayItem()
-    this.findRole()
+  }
+
+  // Main Content
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  findAllCustomerByStatus(){
+    return this.customerService.findAllCustomer().subscribe(value => {
+      console.log(value);
+      this.dataSource = new MatTableDataSource<Customer>(value)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.connect()
+
+    })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  acceptRole(idCustomer ?: number) {
+    for (let i = 0; i < this.dataSource.data.length; i++) {
+      if (idCustomer == this.dataSource.data[i].id ){
+        let customer = {
+          id: idCustomer,
+          name: this.dataSource.data[i].name,
+          emailAddress: this.dataSource.data[i].emailAddress,
+          password: this.dataSource.data[i].password,
+          phoneNumber: this.dataSource.data[i].phoneNumber,
+          address: this.dataSource.data[i].address,
+          image: this.dataSource.data[i].image,
+          status: 1,
+          role:[
+            {
+              id: 3
+            },
+            {
+              id : 2
+            }
+          ]
+        }
+        this.customerService.updateCustomer(idCustomer,customer).subscribe(value => {
+          console.log(value);
+          this.updateSuccess()
+          this.findAllCustomerByStatus()
+        })
+      }
+    }
+  }
+
+  updateSuccess() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Từ chối thành công',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  rejectRole(idCustomer ?: number) {
+    for (let i = 0; i < this.dataSource.data.length; i++) {
+      if (idCustomer == this.dataSource.data[i].id ){
+        let customer = {
+          id: idCustomer,
+          name: this.dataSource.data[i].name,
+          emailAddress: this.dataSource.data[i].emailAddress,
+          password: this.dataSource.data[i].password,
+          phoneNumber: this.dataSource.data[i].phoneNumber,
+          address: this.dataSource.data[i].address,
+          image: this.dataSource.data[i].image,
+          status: 1,
+          role:[
+            {
+              id: 3
+            },
+          ]
+        }
+        this.customerService.updateCustomer(idCustomer,customer).subscribe(value => {
+          console.log(value);
+          this.updateSuccess()
+          this.findAllCustomerByStatus()
+        })
+      }
+    }
+  }
+
+  // Main Content
+
+
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
+
+  }
+
+  // Content
+  logOut() {
+    this.customerService.logOutCustomer();
+    window.location.replace("http://localhost:4200/login-register")
   }
 
   // Hiển thị Brand và Category
@@ -184,7 +291,6 @@ export class UserDetailComponent implements OnInit {
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     return this.customerService.findCustomerById(idCustomer).subscribe(value => {
       this.currentCustomer = value;
-      this.srcImg = this.currentCustomer.image
     })
   }
   findImageURLFirst(idProduct: any): any {
@@ -216,15 +322,7 @@ export class UserDetailComponent implements OnInit {
       }
     })
   }
-  findRole(){
-    // @ts-ignore
-    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
-      console.log(value)
-      this.roleSize = value.role?.length
-    })
 
-  }
 
   // Lấy tổng tiền cần thanh toán khi đặt hàng
   getTotalMoney(subtotal: any) {
@@ -253,20 +351,6 @@ export class UserDetailComponent implements OnInit {
       return formatter.format(money);
     }
 
-  }
-
-  // Lấy tổng tiền cho sản phẩm trong Cart
-  getTotalItem(idItem: any): any {
-    let dtoItems = this.findItemByShopId()
-    let totalMoney: any;
-    for (let i = 0; i < dtoItems.length; i++) {
-      // @ts-ignore
-      if (dtoItems[i].item.id == idItem) {
-        // @ts-ignore
-        totalMoney = dtoItems[i].item.quantity * dtoItems[i].item.product.price
-        return totalMoney
-      }
-    }
   }
 
   deleteItem(idItem?: number) {
@@ -309,22 +393,10 @@ export class UserDetailComponent implements OnInit {
   }
 
 
-  updateSuccess() {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Cập nhật thành công',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
-
   //Find All DTOItem.ts theo id của người đang đăng nhập
   findAllDTOItem() {
     // @ts-ignore
     this.idCurrentCustomer = parseInt(localStorage.getItem("idCustomer"))
-    // @ts-ignore
-    let idCustomerCurrent = parseInt(localStorage.getItem("idCustomer"))
     return this.cartService.findAllDTOItem(this.idCurrentCustomer).subscribe(value => {
       console.log(value)
       this.DTOItems = value
@@ -343,148 +415,8 @@ export class UserDetailComponent implements OnInit {
     return DTOItems;
   }
 
-  logOut(){
-    this.customerService.logOutCustomer();
-    window.location.replace("http://localhost:4200/login")
-  }
-
-  // Thay AVATAR
-  createImage() {
-    if (this.selectedImages.length !== 0){
-
-      for (let i = 0; i < this.selectedImages.length; i++) {
-        // setInterval(() =>{
-        //   console.log("Loading")
-        // },1000)
-        let selectedImage = this.selectedImages[i];
-        var n = Date.now();
-        const filePath = `Images/${n}`;
-        const fileRef = this.storage.ref(filePath);
-        this.storage.upload(filePath, selectedImage).snapshotChanges().pipe(
-          finalize(() =>{
-            fileRef.getDownloadURL().subscribe(url => {
-              console.log(url)
-              this.srcImg = url;
-              let customer = {
-                id: this.currentCustomer.id,
-                name: this.currentCustomer.name,
-                emailAddress: this.currentCustomer.emailAddress,
-                password: this.currentCustomer.password,
-                phoneNumber: this.currentCustomer.phoneNumber,
-                address: this.currentCustomer.address,
-                image: url,
-                status: 1,
-                role:[
-                  {
-                    id: 3
-                  }
-                ]
-              }
-              this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
-                console.log(value)
-                this.updateSuccess();
-              })
-            });
-          })
-        ).subscribe()
-      }    }
-  }
-
-  showPreview(event: any){
-    debugger
-    if (event.target.files && event.target.files[0]){
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      this.selectedImages = event.target.files;
-      console.log(this.selectedImages)
-    }else {
-      this.selectedImages = []
-    }
-    this.createImage();
-
-  }
-  updateProfile(){
-    // @ts-ignore
-    let address = document.getElementById("address").value
-    // @ts-ignore
-    let name = document.getElementById("name").value
-
-    let customer = {
-      id: this.currentCustomer.id,
-      name: name,
-      emailAddress: this.currentCustomer.emailAddress,
-      password: this.currentCustomer.password,
-      phoneNumber: this.currentCustomer.phoneNumber,
-      address: address,
-      image: this.currentCustomer.image,
-      status: 1,
-      role:[
-        {
-          id: 3
-        }
-      ]
-    }
-    this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
-      console.log(value)
-      this.updateSuccess()
-      setTimeout(()=>{
-        window.location.reload()
-      },1700)
-    })
-  }
-
-  updatePassword(){
-    // @ts-ignore
-    let address = document.getElementById("address").value
-    // @ts-ignore
-    let name = document.getElementById("name").value
-    // @ts-ignore
-    const password = document.getElementById("newPass").value
-    let customer = {
-      id: this.currentCustomer.id,
-      name: name,
-      emailAddress: this.currentCustomer.emailAddress,
-      password: password,
-      phoneNumber: this.currentCustomer.phoneNumber,
-      address: address,
-      image: this.currentCustomer.image,
-      status: 1,
-      role:[
-        {
-          id: 3
-        }
-      ]
-    }
-    this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
-      console.log(value)
-      this.updateSuccess()
-      setTimeout(()=>{
-        this.logOut()
-      },1700)
-    })
-  }
 
 
 
-  checkPassword(){
-    // @ts-ignore
-    const repeatPass = document.getElementById("repeatPass").value
-    // @ts-ignore
-    const oldPass = document.getElementById("oldPass").value
-    if (oldPass != this.currentCustomer.password){
-      this.oldPassStatus = "Mật khẩu cũ không đúng"
-    }
-    // @ts-ignore
-    const password = document.getElementById("newPass").value
-    if (repeatPass == "" && password == ""){
-      this.check = true
-    }
-    if (repeatPass != password){
-      this.check = false
-    }else {
-      this.check = true
-      this.p2p = false
-    }
-    console.log(this.check)
-  }
+
 }

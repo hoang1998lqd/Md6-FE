@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {Customer} from "../model/Customer";
@@ -18,34 +18,35 @@ export class CustomerService {
     this.currentCustomer = this.currentCustomerSubject.asObservable();
   }
 
-  public get currentCustomerValue(): CustomerToken{
+  public get currentCustomerValue(): CustomerToken {
     return this.currentCustomerSubject.value;
   }
 
-  findAllCustomer(): Observable<Customer[]>{
+  // Tìm kiếm tất cả người dùng có Status  = 1;
+  findAllCustomer(): Observable<Customer[]> {
     return this.httpClient.get<Customer[]>("http://localhost:8081/api/customers")
   }
 
-  findCustomerById(id?: number): Observable<Customer>{
+  findCustomerById(id?: number): Observable<Customer> {
     return this.httpClient.get<Customer>("http://localhost:8081/api/customers/find-customer-by-id/" + id)
   }
 
-  createCustomer(customer?: Customer): Observable<Customer>{
+  createCustomer(customer?: Customer): Observable<Customer> {
     return this.httpClient.post<Customer>("http://localhost:8081/api/customers/signup", customer)
   }
 
-  updateCustomer(id?: number, customer?: Customer): Observable<Customer>{
+  updateCustomer(id?: number, customer?: Customer): Observable<Customer> {
     return this.httpClient.put<Customer>("http://localhost:8081/api/customers/update-customer/" + id, customer)
   }
 
-  deleteCustomer(id?: number){
+  deleteCustomer(id?: number) {
     return this.httpClient.delete("http://localhost:8081/api/customers/delete-customer/" + id)
   }
 
-  loginCustomer(email?: string, password?: string){
+  loginCustomer(email?: string, password?: string) {
     // @ts-ignore
     return this.httpClient.post<any>("http://localhost:8081/api/customers/login/" + email + "-" + password)
-      .pipe(map(customer =>{
+      .pipe(map(customer => {
         localStorage.setItem("currentCustomer", JSON.stringify(customer));
         // @ts-ignore
         this.currentCustomerSubject.next(customer);
@@ -53,22 +54,27 @@ export class CustomerService {
       }))
   }
 
-  logOutCustomer(){
+  logOutCustomer() {
     localStorage.removeItem("currentCustomer")
     localStorage.removeItem("username")
     localStorage.removeItem("roles")
-    localStorage.setItem("idCustomer","0")
+    localStorage.setItem("idCustomer", "0")
     localStorage.removeItem("token")
     // @ts-ignore
     this.currentCustomerSubject.next(null);
   }
-  createCart(cart ?: Cart):Observable<Cart>{
-    return this.httpClient.post<Cart>("http://localhost:8081/api/carts",cart);
+
+  createCart(cart ?: Cart): Observable<Cart> {
+    return this.httpClient.post<Cart>("http://localhost:8081/api/carts", cart);
   }
 
   // Tìm kiếm người dùng có quyền bán hàng
-  findAllCustomerHaveShop():Observable<Customer[]>{
-    return  this.httpClient.get<Customer[]>("http://localhost:8081/api/customers/shop")
+  findAllCustomerHaveShop(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>("http://localhost:8081/api/customers/shop")
   }
+
+
+
+
 
 }

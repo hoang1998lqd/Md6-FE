@@ -153,7 +153,6 @@ export class OrderCustomerComponent implements OnInit {
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
     this.findCurrentCustomer()
-    // this.currentCustomer = localStorage.getItem("currentCustomer")
     this.username = localStorage.getItem("username")
     // this.displayItem()
     this.findAllDTOItem()

@@ -142,15 +142,15 @@
     <div class="header-bottom  header-sticky">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
-            <span class="categorie-title">Danh mục sản phẩm</span>
-          </div>
+<!--          <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">-->
+<!--            <span class="categorie-title">Danh mục sản phẩm</span>-->
+<!--          </div>-->
           <div class="col-xl-9 col-lg-8 col-md-12 ">
             <nav class="d-none d-lg-block">
               <ul class="header-bottom-list d-flex">
-                <li class="active"><a href="index.html">Trang chủ</a>
+                <li class="active"><a routerLink="/">Trang chủ</a>
                 </li>
-                <li><a href="shop.html">Mua Sắm</a>
+                <li><a routerLink="/">Mua Sắm</a>
                 </li>
                 <li *ngIf="roleSize != 1">
                   <a routerLink="admin" >Quản lý cửa hàng</a>
@@ -269,18 +269,17 @@
   </div>
   <!-- Categorie Menu & Slider Area End Here -->
   <!-- Breadcrumb Start -->
-<!--  <div class="breadcrumb-area mt-30">-->
-<!--    <div class="container">-->
-<!--      <div class="breadcrumb">-->
-<!--        <ul class="d-flex align-items-center">-->
-<!--          <li><a href="index.html">Home</a></li>-->
-<!--          <li><a href="shop.html">Shop</a></li>-->
-<!--          <li class="active"><a href="product.html">Products</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash; Container End &ndash;&gt;-->
-<!--  </div>-->
+  <div class="breadcrumb-area mt-30">
+    <div class="container">
+      <div class="breadcrumb">
+        <ul class="d-flex align-items-center">
+          <li><a routerLink="/">Trang chủ</a></li>
+          <li><a >Thông tin sản phẩm</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Container End -->
+  </div>
   <!-- Breadcrumb End -->
   <!-- Product Thumbnail Start -->
   <div class="main-product-thumbnail ptb-100 ptb-sm-60">
@@ -411,110 +410,121 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="main-thumb-desc nav tabs-area" role="tablist">
-            <li><a class="active" data-toggle="tab" href="#dtail">Product Details</a></li>
-            <li><a data-toggle="tab" href="#review">Reviews 1</a></li>
+<!--            <li><a class="active" data-toggle="tab" href="#dtail">Product Details</a></li>-->
+            <li><a data-toggle="tab" >Đánh giá của khách hàng</a></li>
           </ul>
           <!-- Product Thumbnail Tab Content Start -->
           <div class="tab-content thumb-content border-default">
-            <div id="dtail" class="tab-pane fade show active">
-              <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
-            </div>
-            <div id="review" class="tab-pane fade">
+<!--            <div id="dtail" class="tab-pane fade show active">-->
+<!--              <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>-->
+<!--            </div>-->
+            <div id="review">
               <!-- Reviews Start -->
-              <div class="review border-default universal-padding">
-                <div class="group-title">
-                  <h2>customer review</h2>
+              <div *ngFor="let c of DTOComment">
+                <div class="review border-default universal-padding">
+                  <div class="group-title">
+                    <h2>{{c.name}} </h2>
+                  </div>
+                  <h4 class="review-mini-title"><b>{{c.review}}</b></h4>
+                  <ul class="review-list">
+                    <!-- Single Review List Start -->
+                    <!--                  <li>-->
+                    <!--                    <span>Quality</span>-->
+                    <!--                    <i class="fa fa-star"></i>-->
+                    <!--                    <i class="fa fa-star"></i>-->
+                    <!--                    <i class="fa fa-star"></i>-->
+                    <!--                    <i class="fa fa-star-o"></i>-->
+                    <!--                    <i class="fa fa-star-o"></i>-->
+                    <!--                    <label>Truemart</label>-->
+                    <!--                  </li>-->
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <!--                  <li>-->
+                    <!--                    <span>price</span>-->
+                    <!--                    <i class="fa fa-star"></i>-->
+                    <!--                    <i class="fa fa-star"></i>-->
+                    <!--                    <i class="fa fa-star-o"></i>-->
+                    <!--                    <i class="fa fa-star-o"></i>-->
+                    <!--                    <i class="fa fa-star-o"></i>-->
+                    <!--                    <label>Review by <a href="https://themeforest.net/user/hastech">Truemart</a></label>-->
+                    <!--                  </li>-->
+                    <!-- Single Review List End -->
+                    <!-- Single Review List Start -->
+                    <li>
+                      <p>Thời gian: {{c.time}}</p>
+                      <!--                    <i class="fa fa-star"></i>-->
+                      <!--                    <i class="fa fa-star"></i>-->
+                      <!--                    <i class="fa fa-star"></i>-->
+                      <!--                    <i class="fa fa-star"></i>-->
+                      <!--                    <i class="fa fa-star-o"></i>-->
+                      <!--                    <span> Posted on 7/20/18</span>-->
+                    </li>
+                    <!-- Single Review List End -->
+                  </ul>
                 </div>
-                <h4 class="review-mini-title">Truemart</h4>
-                <ul class="review-list">
-                  <!-- Single Review List Start -->
-                  <li>
-                    <span>Quality</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <label>Truemart</label>
-                  </li>
-                  <!-- Single Review List End -->
-                  <!-- Single Review List Start -->
-                  <li>
-                    <span>price</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <label>Review by <a href="https://themeforest.net/user/hastech">Truemart</a></label>
-                  </li>
-                  <!-- Single Review List End -->
-                  <!-- Single Review List Start -->
-                  <li>
-                    <span>value</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <label>Posted on 7/20/18</label>
-                  </li>
-                  <!-- Single Review List End -->
-                </ul>
               </div>
+              <div *ngIf="displayComment == true" >
+                <b style="color: red; font-size: 18px;">Sản phẩm hiện chưa có đánh giá nào!</b>
+              </div>
+
               <!-- Reviews End -->
               <!-- Reviews Start -->
               <div class="review border-default universal-padding mt-30">
-                <h2 class="review-title mb-30">You're reviewing: <br><span>Faded Short Sleeves T-shirt</span></h2>
-                <p class="review-mini-title">your rating</p>
+                <h2 class="review-title mb-30">Viết đánh giá của bạn:  <br></h2>
+<!--                <p class="review-mini-title">your rating</p>-->
                 <ul class="review-list">
                   <!-- Single Review List Start -->
                   <li>
-                    <span>Quality</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
+<!--                    <span>Quality</span>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
                   </li>
                   <!-- Single Review List End -->
                   <!-- Single Review List Start -->
                   <li>
-                    <span>price</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
+<!--                    <span>price</span>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
                   </li>
                   <!-- Single Review List End -->
                   <!-- Single Review List Start -->
                   <li>
-                    <span>value</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+<!--                    <span>value</span>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star"></i>-->
+<!--                    <i class="fa fa-star-o"></i>-->
                   </li>
                   <!-- Single Review List End -->
                 </ul>
                 <!-- Reviews Field Start -->
                 <div class="riview-field mt-40">
-                  <form autocomplete="off" action="#">
+                  <form autocomplete="off" [formGroup]="commentForm">
+<!--                    <div class="form-group">-->
+<!--                      <label class="req" for="sure-name">Nickname</label>-->
+<!--                      <input type="text" class="form-control" id="sure-name" required="required">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                      <label class="req" for="subject">Summary</label>-->
+<!--                      <input type="text" class="form-control" id="subject" required="required">-->
+<!--                    </div>-->
                     <div class="form-group">
-                      <label class="req" for="sure-name">Nickname</label>
-                      <input type="text" class="form-control" id="sure-name" required="required">
+                      <label class="req" for="comments">Nội dung</label>
+                      <textarea class="form-control" rows="5" id="comments" formControlName="review" required="required"
+                                [class.is-valid]="commentForm.get('review')?.touched && commentForm.get('review')?.valid"
+                                [class.is-invalid]="commentForm.get('review')?.touched && commentForm.get('review')?.invalid"></textarea>
+                      <div style="font-size: 14px; font-weight: 500" class="invalid-feedback">
+                        Nội dung phản hồi không được để trống!
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label class="req" for="subject">Summary</label>
-                      <input type="text" class="form-control" id="subject" required="required">
-                    </div>
-                    <div class="form-group">
-                      <label class="req" for="comments">Review</label>
-                      <textarea class="form-control" rows="5" id="comments" required="required"></textarea>
-                    </div>
-                    <button type="submit" class="customer-btn">Submit Review</button>
+                    <button [disabled]="commentForm.invalid" (click)="createComment()" class="customer-btn">Gửi</button>
                   </form>
                 </div>
                 <!-- Reviews Field Start -->

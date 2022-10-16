@@ -11,6 +11,10 @@ import {Item} from "../model/Item";
 import {CategoryBrand} from "../model/CategoryBrand";
 import {DTOItem} from "../model/DTOItem";
 import Swal from "sweetalert2";
+import {DTOComment} from "../model/DTOComment";
+import {Comment} from "../model/Comment";
+import {CommentService} from "../service/comment.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-product',
@@ -29,10 +33,16 @@ export class ProductComponent implements OnInit {
   subtotal: number = 0;
   discountItem: number = 0;
   voucherItem: number = 0;
-  DTOItems: DTOItem [] = []
-  idCurrentCustomer : number = 0
-  listProduct: ProductDTO [] = []
-  username?: any
+  DTOItems: DTOItem [] = [];
+  idCurrentCustomer: number = 0;
+  listProduct: ProductDTO [] = [];
+  username?: any;
+  DTOComment?: DTOComment[];
+  comment?: Comment;
+  displayComment: boolean = true;
+  commentForm!: FormGroup
+  curDate?: any
+  time?: string
 
   myScriptElement: HTMLScriptElement;
   myScriptElement1: HTMLScriptElement;
@@ -53,7 +63,9 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private categoryBrandService: CategoryBrandService,
     private orderService: OrdersService,
-    private router: Router) {
+    private commentService: CommentService,
+    private router: ActivatedRoute,
+    private formGroup: FormBuilder) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -108,6 +120,17 @@ export class ProductComponent implements OnInit {
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-3.5.0.min.js';
     document.body.appendChild(script1);
+    this.commentForm = new FormGroup({
+      id: new FormControl(""),
+      review: new FormControl("", Validators.required),
+      time: new FormControl(""),
+      product: new FormControl(""),
+      customer: new FormControl(""),
+    })
+    this.curDate = new Date();
+    this.time = this.curDate.getFullYear()+"-"+(this.curDate.getMonth()+1)+"-"+this.curDate.getDate()+"T"+this.curDate.getHours()+":"+this.curDate.getMinutes()+":"+this.curDate.getSeconds()
+    console.log(this.time)
+    this.username = localStorage.getItem("username")
     // @ts-ignore
     this.idProduct = this.router.snapshot.queryParamMap.get("id")
     // console.log(this.idProduct)
@@ -117,10 +140,63 @@ export class ProductComponent implements OnInit {
       this.DTOProduct = value
       // console.log(this.DTOProduct)
     })
-    this.displayBrandByCategory()
+    this.displayComment = true;
+    this.displayComments();
+    // this.displayBrandByCategory()
     this.findRole()
   }
-  findRole(){
+
+  displayComments() {
+    this.commentService.findCommentByIdProduct(this.idProduct).subscribe(value => {
+      this.DTOComment = value
+      if (this.DTOComment.length >= 1) {
+        this.displayComment = false;
+      }
+    })
+  }
+
+  createComment() {
+    let comment = {
+      id: this.commentForm.value.id,
+      review: this.commentForm.value.review,
+      time: this.commentForm.value.time,
+      product: {
+        id: this.idProduct
+      },
+      customer: {
+        id: this.idCustomer
+      }
+    }
+    this.commentService.createComment(comment).subscribe(value => {
+      this.createCommentSuccess();
+    }, error => {
+      this.createCommentFail()
+    })
+  }
+
+  createCommentSuccess() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Phản hồi thành công',
+      showConfirmButton: false,
+      timer: 1500
+    }).finally(()=>{
+      this.displayComments()
+    })
+  }
+
+  createCommentFail(value?: any) {
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Phản hồi thất bại',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  findRole() {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
     return this.customerService.findCustomerById(idCustomer).subscribe(value => {
@@ -129,6 +205,7 @@ export class ProductComponent implements OnInit {
     })
 
   }
+
   // Hiển thị Brand và Category
   displayBrandByCategory() {
     return this.categoryBrandService.findAllCategoryAndBrand().subscribe(value => {
@@ -194,6 +271,7 @@ export class ProductComponent implements OnInit {
     })
 
   }
+
   changePrice(money?: number): any {
     const formatter = new Intl.NumberFormat('it-IT', {
       style: 'currency',
@@ -203,6 +281,7 @@ export class ProductComponent implements OnInit {
       return formatter.format(money);
     }
   }
+
   findImageURLFirst(idProduct: any): any {
     let imageURL: any;
     let flag = false;

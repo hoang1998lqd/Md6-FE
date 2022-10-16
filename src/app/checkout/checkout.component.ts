@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import {OrderDetail} from "../model/OrderDetail";
 import {CategoryBrand} from "../model/CategoryBrand";
 import {CategoryBrandService} from "../service/category-brand.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-checkout',
@@ -33,7 +34,7 @@ export class CheckoutComponent implements OnInit {
   myScriptElement11: HTMLScriptElement;
   myScriptElement12: HTMLScriptElement;
 
-
+  roleSize ?: number
   currentCustomer!: Customer;
   items: Item [] = [];
   categoryBrands: CategoryBrand[] = []
@@ -44,11 +45,12 @@ export class CheckoutComponent implements OnInit {
   DTOItems: DTOItem [] = []
   idCurrentCustomer : number = 0
   listProduct: ProductDTO [] = []
-  DTOItemCheckOut: DTOItem [] = []
+  username?: any
   constructor(private customerService: CustomerService, private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
-              private orderService: OrdersService) {
+              private orderService: OrdersService,
+              private router: Router) {
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
     document.body.appendChild(this.myScriptElement)
@@ -109,12 +111,15 @@ export class CheckoutComponent implements OnInit {
     script1.src = './assets/js/vendor/modernizr-2.8.3.min.js';
     document.body.appendChild(script1);
     this.findCurrentCustomer()
+    // this.currentCustomer = localStorage.getItem("currentCustomer")
+    this.username = localStorage.getItem("username")
     // this.displayItem()
     this.findAllDTOItem()
     this.findItemByShopId()
     this.findProductByCustomerId()
     this.displayBrandByCategory()
     this.displayItem()
+    this.findRole()
   }
 
   // Hiển thị Brand và Category
@@ -320,9 +325,6 @@ export class CheckoutComponent implements OnInit {
           })
         }
         this.createSuccess()
-        setTimeout(() => {
-          window.location.reload()
-        }, 1700)
       })
     })
   }
@@ -334,6 +336,9 @@ export class CheckoutComponent implements OnInit {
       title: 'Đặt hàng thành công',
       showConfirmButton: false,
       timer: 1500
+    }).finally(() =>{
+      localStorage.removeItem("idShop")
+      this.router.navigate(["/"])
     })
   }
 
@@ -426,6 +431,15 @@ export class CheckoutComponent implements OnInit {
   logOut(){
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login-register")
+  }
+  findRole(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      console.log(value)
+      this.roleSize = value.role?.length
+    })
+
   }
 
 }

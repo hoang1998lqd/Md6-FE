@@ -92,4 +92,8 @@ export class ProductService {
     return this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/find-name-products/" + name + "&" + idCustomer);
   }
 
+  findAllDTOProductByOrderId(idOrder ?: number):Observable<ProductDTO[]>{
+    return  this.httpClient.get<ProductDTO[]>("http://localhost:8081/api/products/orders/" + idOrder)
+  }
+
 }

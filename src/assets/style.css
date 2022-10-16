@@ -1292,6 +1292,12 @@ li.megamenu-img a {
   font-size: 21px;
   font-weight: 700;
   line-height: 20px;
+}.sold {
+  color: #363636;
+  font-family: "Lato",sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
 }
 .prev-price {
   color: #666;
@@ -2670,7 +2676,7 @@ li.megamenu-img a {
     -ms-flex-pack: justify;
     justify-content: space-between;
     margin-bottom: 20px;
-    padding-bottom: 25px;
+    /*padding-bottom: 25px;*/
     padding-top: 25px;
     position: relative;
 }

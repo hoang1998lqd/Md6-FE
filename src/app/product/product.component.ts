@@ -118,6 +118,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     const script1 = document.createElement('script');
     script1.src = './assets/js/vendor/modernizr-3.5.0.min.js';
     document.body.appendChild(script1);
@@ -128,6 +129,8 @@ export class ProductComponent implements OnInit {
       product: new FormControl(""),
       customer: new FormControl(""),
     })
+    // @ts-ignore
+    this.currentCustomer = localStorage.getItem("currentCustomer")
     this.curDate = new Date();
     this.time = this.curDate.getFullYear()+"-"+(this.curDate.getMonth()+1)+"-"+this.curDate.getDate()+"T"+this.curDate.getHours()+":"+this.curDate.getMinutes()+":"+this.curDate.getSeconds()
     console.log(this.time)
@@ -169,6 +172,7 @@ export class ProductComponent implements OnInit {
       }
     }
     this.commentService.createComment(comment).subscribe(value => {
+      this.commentForm.reset()
       this.createCommentSuccess();
     }, error => {
       this.createCommentFail()

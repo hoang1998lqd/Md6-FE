@@ -49,14 +49,14 @@
 
             <li>
               <!--              <img style="width: 10%; height: 10%" src="data:image/jpeg;base64,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" alt="">-->
-              <a ><strong>Tài Khoản</strong><i class="lnr lnr-chevron-down"></i></a>
+              <a><strong>Tài Khoản</strong><i class="lnr lnr-chevron-down"></i></a>
               <!-- Dropdown Start -->
               <ul class="ht-dropdown">
-                <li *ngIf="!currentCustomer"><a  routerLink="login">Đăng nhập</a></li>
-                <li *ngIf="!currentCustomer"><a  routerLink="register">Đăng Ký</a></li>
+                <li *ngIf="!currentCustomer"><a routerLink="login">Đăng nhập</a></li>
+                <li *ngIf="!currentCustomer"><a routerLink="register">Đăng Ký</a></li>
                 <li><a routerLink="user-detail">Thông tin cá nhân</a></li>
-                <li><a href="login.html">Lịch sử mua hàng</a></li>
-                <li *ngIf="currentCustomer"><a  (click)="logOut()">Đăng xuất</a></li>
+                <li><a href="login.html" routerLink="/order-customer">Lịch sử mua hàng</a></li>
+                <li *ngIf="currentCustomer"><a (click)="logOut()">Đăng xuất</a></li>
               </ul>
               <!-- Dropdown End -->
             </li>
@@ -381,7 +381,7 @@
 <!--                    <a href="wishlist.html" title="" data-original-title="WishList"><i class="lnr lnr-heart"></i> <span>Add to WishList</span></a>-->
 <!--                  </div>-->
 <!--                </div>-->
-<!--              </div>-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
 <!--              <div class="pro-ref mt-20">-->
 <!--                <p><span class="in-stock"><i class="ion-checkmark-round"></i> IN STOCK</span></p>-->
 <!--              </div>-->

@@ -9,6 +9,7 @@ import {CategoryBrandService} from "../service/category-brand.service";
 import {CustomerService} from "../service/customer.service";
 import Swal from "sweetalert2";
 import {DTOProductSold} from "../model/DTOProductSold";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -51,7 +52,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   constructor(private productService: ProductService,
               private cartService: CartService,
               private categoryBrandService: CategoryBrandService,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              private router: Router) {
 
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/js/vendor/jquery-3.2.1.min.js";
@@ -250,21 +252,44 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   addToCart(idProduct?: number) {
     // @ts-ignore
     let idCustomer = parseInt(localStorage.getItem("idCustomer"))
-    this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {
-      this.items = value;
-      let flag = false;
-      for (let i = 0; i < this.items.length; i++) {
-        if (this.items[i].product!.id == idProduct) {
-          flag = true;
-          // @ts-ignore
-          let quantity = this.items[i].quantity + 1;
-          // @ts-ignore
-          if (quantity > this.items[i].product.amount) {
+    if (idCustomer == 0){
+      this.router.navigate(["login"])
+    }else {
+      this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {
+        this.items = value;
+        let flag = false;
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i].product!.id == idProduct) {
+            flag = true;
             // @ts-ignore
-            quantity = this.items[i].product.amount
+            let quantity = this.items[i].quantity + 1;
+            // @ts-ignore
+            if (quantity > this.items[i].product.amount) {
+              // @ts-ignore
+              quantity = this.items[i].product.amount
+            }
+            let item = {
+              id: this.items[i].id,
+              quantity: quantity,
+              cart: {
+                id: idCustomer
+              },
+              product: {
+                id: idProduct
+              }
+            }
+            this.cartService.updateItemToCart(item).subscribe(value1 => {
+              console.log(value1)
+              this.addItemToCartSuccess()
+              setTimeout(() => {
+                this.displayItem()
+              }, 1700)
+            })
           }
+        }
+        if (!flag) {
+          let quantity = 1;
           let item = {
-            id: this.items[i].id,
             quantity: quantity,
             cart: {
               id: idCustomer
@@ -273,35 +298,16 @@ export class HomeComponent implements OnInit, AfterContentChecked {
               id: idProduct
             }
           }
-          this.cartService.updateItemToCart(item).subscribe(value1 => {
-            console.log(value1)
+          this.cartService.saveItemToCart(item).subscribe(value1 => {
+            console.log(value1);
             this.addItemToCartSuccess()
             setTimeout(() => {
               this.displayItem()
             }, 1700)
           })
         }
-      }
-      if (!flag) {
-        let quantity = 1;
-        let item = {
-          quantity: quantity,
-          cart: {
-            id: idCustomer
-          },
-          product: {
-            id: idProduct
-          }
-        }
-        this.cartService.saveItemToCart(item).subscribe(value1 => {
-          console.log(value1);
-          this.addItemToCartSuccess()
-          setTimeout(() => {
-            this.displayItem()
-          }, 1700)
-        })
-      }
-    })
+      })
+    }
 
   }
 
@@ -455,4 +461,40 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
 
+  // Đăng ký bán hàng
+  signShop(){
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      let customer = {
+        id: value.id,
+        name: value.name,
+        emailAddress:value.emailAddress,
+        password: value.password,
+        phoneNumber: value.phoneNumber,
+        address: value.address,
+        image: value.image,
+        status: 2,
+        role:[
+          {
+            id: 3
+          }
+        ]
+      }
+      this.customerService.updateCustomer(idCustomer, customer).subscribe(value => {
+        console.log(value)
+        this.updateSuccess();
+      })
+    })
+
+  }
+  updateSuccess() {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Chờ xác nhận từ ADMIN',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
 }

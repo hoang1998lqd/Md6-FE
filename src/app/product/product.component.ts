@@ -43,6 +43,8 @@ export class ProductComponent implements OnInit {
   commentForm!: FormGroup
   curDate?: any
   time?: string
+  productIdSolds ?: number[]
+  checkExist !: boolean
 
 
   myScriptElement: HTMLScriptElement;
@@ -132,7 +134,7 @@ export class ProductComponent implements OnInit {
     // @ts-ignore
     this.currentCustomer = localStorage.getItem("currentCustomer")
     this.curDate = new Date();
-    this.time = this.curDate.getFullYear()+"-"+(this.curDate.getMonth()+1)+"-"+this.curDate.getDate()+"T"+this.curDate.getHours()+":"+this.curDate.getMinutes()+":"+this.curDate.getSeconds()
+    this.time = this.curDate.getFullYear() + "-" + (this.curDate.getMonth() + 1) + "-" + this.curDate.getDate() + "T" + this.curDate.getHours() + ":" + this.curDate.getMinutes() + ":" + this.curDate.getSeconds()
     console.log(this.time)
     this.username = localStorage.getItem("username")
     // @ts-ignore
@@ -148,6 +150,22 @@ export class ProductComponent implements OnInit {
     this.displayComments();
     // this.displayBrandByCategory()
     this.findRole()
+    this.displayItem()
+    this.findProductIdSoldForCustomer()
+  }
+
+  displayItem() {
+    // @ts-ignore
+    this.idCurrentCustomer = parseInt(localStorage.getItem("idCustomer"))
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    this.cartService.findAllItemByCustomerId(idCustomer).subscribe(value => {
+      this.items = value;
+      for (let i = 0; i < value.length; i++) {
+        // @ts-ignore
+        this.total += value[i].quantity * value[i].product.price
+      }
+    })
   }
 
   displayComments() {
@@ -186,7 +204,7 @@ export class ProductComponent implements OnInit {
       title: 'Phản hồi thành công',
       showConfirmButton: false,
       timer: 1500
-    }).finally(()=>{
+    }).finally(() => {
       this.displayComments()
     })
   }
@@ -305,5 +323,26 @@ export class ProductComponent implements OnInit {
   logOut() {
     this.customerService.logOutCustomer();
     window.location.replace("http://localhost:4200/login")
+  }
+
+  findProductIdSoldForCustomer() {
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.commentService.findProductIdSoldForCustomer(idCustomer).subscribe(value => {
+      console.log(value)
+      this.productIdSolds = value
+    })
+
+  }
+  check():any {
+    let check = 0
+    // @ts-ignore
+    for (let i = 0; i < this.productIdSolds?.length; i++) {
+      // @ts-ignore
+      if (this.productIdSolds[i] == this.idProduct){
+        check = 1
+      }
+    }
+    return check
   }
 }

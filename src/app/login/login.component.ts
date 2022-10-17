@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit {
 
   directCustomer(roles?: string){
     if (roles == "ADMIN"){
-      this.router.navigate(['admin'])
+      this.router.navigate(['admin-manage'])
     }
     if (roles == "SELLER"){
       this.router.navigate(['/'])

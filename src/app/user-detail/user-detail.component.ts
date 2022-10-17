@@ -349,7 +349,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   // Thay AVATAR
-  createImage() {
+  createImage()   {
     if (this.selectedImages.length !== 0){
 
       for (let i = 0; i < this.selectedImages.length; i++) {
@@ -380,7 +380,7 @@ export class UserDetailComponent implements OnInit {
                   }
                 ]
               }
-              this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
+              this.customerService.updateProfileCustomer(this.currentCustomer.id, customer).subscribe(value => {
                 console.log(value)
                 this.updateSuccess();
               })
@@ -418,13 +418,9 @@ export class UserDetailComponent implements OnInit {
       address: address,
       image: this.currentCustomer.image,
       status: 1,
-      role:[
-        {
-          id: 3
-        }
-      ]
+      role: this.currentCustomer.role
     }
-    this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
+    this.customerService.updateProfileCustomer(this.currentCustomer.id, customer).subscribe(value => {
       console.log(value)
       this.updateSuccess()
       setTimeout(()=>{
@@ -449,11 +445,7 @@ export class UserDetailComponent implements OnInit {
       address: address,
       image: this.currentCustomer.image,
       status: 1,
-      role:[
-        {
-          id: 3
-        }
-      ]
+      role: this.currentCustomer.role
     }
     this.customerService.updateCustomer(this.currentCustomer.id, customer).subscribe(value => {
       console.log(value)

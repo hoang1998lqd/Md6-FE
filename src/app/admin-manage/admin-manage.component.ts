@@ -184,7 +184,7 @@ export class AdminManageComponent implements OnInit {
             }
           ]
         }
-        this.customerService.updateCustomer(idCustomer,customer).subscribe(value => {
+        this.customerService.updateProfileCustomer(idCustomer,customer).subscribe(value => {
           console.log(value);
           this.updateSuccess()
           this.findAllCustomerByStatus()
@@ -197,7 +197,7 @@ export class AdminManageComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Từ chối thành công',
+      title: 'Cấp quyền thành công',
       showConfirmButton: false,
       timer: 1500
     })
@@ -246,7 +246,7 @@ export class AdminManageComponent implements OnInit {
   // Content
   logOut() {
     this.customerService.logOutCustomer();
-    window.location.replace("http://localhost:4200/login-register")
+    window.location.replace("http://localhost:4200/login")
   }
 
   // Hiển thị Brand và Category

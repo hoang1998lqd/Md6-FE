@@ -27,4 +27,8 @@ export class CommentService {
     return this.httpClient.post<Comment>("http://localhost:8081/api/commment/", comment)
   }
 
+  findProductIdSoldForCustomer(idCustomer?: number): Observable<any>{
+    return this.httpClient.get<any>("http://localhost:8081/api/products/product-sold-customer/" + idCustomer)
+  }
+
 }

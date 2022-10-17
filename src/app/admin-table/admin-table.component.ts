@@ -28,7 +28,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
   myScriptElement4: HTMLScriptElement;
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
-
+  username?: any
 
   listProduct!: MatTableDataSource<ProductDTO>
   products: ProductDTO [] = []
@@ -124,6 +124,7 @@ export class AdminTableComponent implements OnInit, AfterContentChecked, AfterVi
       category: [''],
       customer: [''],
     })
+    this.username = localStorage.getItem("username")
   }
 
   ngAfterContentChecked() {

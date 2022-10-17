@@ -123,7 +123,7 @@ export class OrderShopComponent implements OnInit {
   // Content
   logOut(){
     this.customerService.logOutCustomer();
-    window.location.replace("http://localhost:4200/login-register")
+    window.location.replace("http://localhost:4200/login")
   }
   // findAllOrderByShopId() {
   //   // @ts-ignore

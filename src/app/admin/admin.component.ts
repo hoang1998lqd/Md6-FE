@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OrdersService} from "../service/orders.service";
+import {Customer} from "../model/Customer";
+import {CustomerService} from "../service/customer.service";
 
 @Component({
   selector: 'app-admin',
@@ -15,12 +17,15 @@ export class AdminComponent implements OnInit {
   myScriptElement5: HTMLScriptElement;
   myScriptElement6: HTMLScriptElement;
   username?: any
+  srcImg : any
+  currentCustomer!: Customer;
 
   turnover :number = 0
   totalOrder :number = 0;
   totalOrderShip : number = 0
 
-  constructor(private  orderService : OrdersService) {
+  constructor(private  orderService : OrdersService,
+              private customerService: CustomerService) {
 
     this.myScriptElement = document.createElement("script")
     this.myScriptElement.src = "./assets/admin/vendor/jquery/jquery.min.js";
@@ -98,6 +103,14 @@ export class AdminComponent implements OnInit {
     // document.body.appendChild(script11);
   }
 
+  findCurrentCustomer() {
+    // @ts-ignore
+    let idCustomer = parseInt(localStorage.getItem("idCustomer"))
+    return this.customerService.findCustomerById(idCustomer).subscribe(value => {
+      this.currentCustomer = value;
+      this.srcImg = this.currentCustomer.image
+    })
+  }
   // Thống kế tất cả đơn hàng của CỬA HÀNG ĐÓ ĐỂ TÍNH LỢI NHUẬN TỔNG
   findAllOrderDetailByShopId(){
     // @ts-ignore

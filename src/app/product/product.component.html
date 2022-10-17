@@ -469,7 +469,7 @@
 
               <!-- Reviews End -->
               <!-- Reviews Start -->
-              <div class="review border-default universal-padding mt-30">
+              <div class="review border-default universal-padding mt-30"  *ngIf="check() == 1">
                 <h2 class="review-title mb-30">Viết đánh giá của bạn:  <br></h2>
 <!--                <p class="review-mini-title">your rating</p>-->
                 <ul class="review-list">
@@ -506,7 +506,7 @@
                 </ul>
                 <!-- Reviews Field Start -->
                 <div class="riview-field mt-40">
-                  <form autocomplete="off" [formGroup]="commentForm">
+                  <form autocomplete="off" [formGroup]="commentForm" >
 <!--                    <div class="form-group">-->
 <!--                      <label class="req" for="sure-name">Nickname</label>-->
 <!--                      <input type="text" class="form-control" id="sure-name" required="required">-->

@@ -38,6 +38,9 @@ export class CustomerService {
   updateCustomer(id?: number, customer?: Customer): Observable<Customer> {
     return this.httpClient.put<Customer>("http://localhost:8081/api/customers/update-customer/" + id, customer)
   }
+  updateProfileCustomer(id?: number, customer?: Customer): Observable<Customer> {
+    return this.httpClient.put<Customer>("http://localhost:8081/api/customers/update-profile/" + id, customer)
+  }
 
   deleteCustomer(id?: number) {
     return this.httpClient.delete("http://localhost:8081/api/customers/delete-customer/" + id)

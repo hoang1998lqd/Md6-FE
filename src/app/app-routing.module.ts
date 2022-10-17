@@ -39,7 +39,13 @@ const routes: Routes = [
     path: "product", component: ProductComponent
   },
   {
+    path: "admin-manage", component: AdminManageComponent
+  },
+  {
     path: "accept-customer", component: AdminManageComponent
+  },
+  {
+    path: "order-customer", component: OrderCustomerComponent
   },
   {
     path: "order-customer", component: OrderCustomerComponent

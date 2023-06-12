@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   myScriptElement3: HTMLScriptElement;
   myScriptElement4: HTMLScriptElement;
   myScriptElement5: HTMLScriptElement;
-  myScriptElement6: HTMLScriptElement;
+  // myScriptElement6: HTMLScriptElement;
   myScriptElement7: HTMLScriptElement;
   myScriptElement8: HTMLScriptElement;
   myScriptElement9: HTMLScriptElement;
@@ -58,9 +58,9 @@ export class RegisterComponent implements OnInit {
     this.myScriptElement5.src = "./assets/js/jquery.fancybox.min.js";
     document.body.appendChild(this.myScriptElement5)
 
-    this.myScriptElement6 = document.createElement("script")
-    this.myScriptElement6.src = "./assets/js/jquery.nice-select.min.js";
-    document.body.appendChild(this.myScriptElement6)
+    // this.myScriptElement6 = document.createElement("script")
+    // this.myScriptElement6.src = "./assets/js/jquery.nice-select.min.js";
+    // document.body.appendChild(this.myScriptElement6)
 
     this.myScriptElement7 = document.createElement("script")
     this.myScriptElement7.src = "./assets/js/jquery-ui.min.js";
@@ -84,6 +84,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("sdfkjsdhfaklsjdh")
     this.currentCustomer = localStorage.getItem("currentCustomer")
     if (this.currentCustomer != null){
       this.router.navigate(["/"])
